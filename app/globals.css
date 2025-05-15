@@ -1,0 +1,273 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: 204, 85%, 43%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 39, 96%, 53%;
+  --secondary-foreground: 210 40% 98%;
+
+  --accent: 204, 85%, 90%;
+  --accent-foreground: 204, 85%, 20%;
+
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --ring: 204, 85%, 43%;
+  --radius: 0.5rem;
+
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-sora);
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 204, 85%, 50%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 39, 96%, 53%;
+  --secondary-foreground: 210 40% 98%;
+
+  --accent: 204, 85%, 20%;
+  --accent-foreground: 204, 85%, 90%;
+
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+
+  --ring: 204, 85%, 50%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300 text-lg;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Add smooth transitions for all elements when theme changes */
+  html.transitioning * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-bold;
+  }
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 font-medium py-3 px-6 rounded-md transition-all;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 font-medium py-3 px-6 rounded-md transition-all;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-medium py-3 px-6 rounded-md transition-all;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-primary/90 to-primary;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient a-to-r from-primary to-secondary;
+  }
+
+  .hero-pattern {
+    background-color: hsl(var(--primary));
+    /* Removed the plus sign pattern */
+  }
+
+  .section-divider {
+    position: relative;
+    height: 80px;
+    margin-top: -80px;
+    background: transparent;
+    z-index: 1;
+  }
+
+  .section-divider svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: hsl(var(--background));
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .glassmorphism {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+
+  /* Add improved hero title styles */
+  .hero-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .hero-title {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .hero-pattern {
+    background-color: hsl(var(--primary));
+    /* Removed the plus sign pattern */
+  }
+
+  .dark .glassmorphism {
+    @apply bg-gray-900/70 backdrop-blur-md border border-gray-800;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Dark mode specific overrides */
+  .dark input,
+  .dark textarea,
+  .dark select {
+    background-color: rgb(31, 41, 55); /* bg-gray-800 */
+    border-color: rgb(55, 65, 81); /* border-gray-700 */
+    color: white;
+  }
+
+  .dark .bg-white {
+    background-color: rgb(17, 24, 39); /* bg-gray-900 */
+  }
+
+  .dark .bg-gray-50 {
+    background-color: rgb(17, 24, 39); /* bg-gray-900 */
+  }
+
+  .dark .bg-gray-100 {
+    background-color: rgb(31, 41, 55); /* bg-gray-800 */
+  }
+
+  .dark .border-gray-200 {
+    border-color: rgb(31, 41, 55); /* border-gray-800 */
+  }
+
+  .dark .text-gray-700 {
+    color: rgb(209, 213, 219); /* text-gray-300 */
+  }
+
+  .dark .text-gray-600 {
+    color: rgb(156, 163, 175); /* text-gray-400 */
+  }
+
+  .dark .text-gray-500 {
+    color: rgb(107, 114, 128); /* text-gray-500 */
+  }
+
+  /* Custom shadow classes for dark mode */
+  .dark-shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .dark-shadow {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark-shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark-shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark-shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark .hover\:bg-gray-50:hover {
+    background-color: rgb(31, 41, 55); /* hover:bg-gray-800 */
+  }
+}
