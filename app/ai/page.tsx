@@ -182,19 +182,6 @@ export default function AIPage() {
             </div>
           </ScrollReveal>
 
-          {/* Video Section */}
-          <div className="mb-16">
-            <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-xl max-w-4xl mx-auto">
-              <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="24Hr Truck AI Services"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
-            </div>
-          </div>
-
           {/* Feature Cards - Horizontal Layout */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
             <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center">

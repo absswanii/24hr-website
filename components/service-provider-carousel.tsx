@@ -16,7 +16,6 @@ export function ServiceProviderCarousel() {
   const animationRef = useRef<number | null>(null)
   const [scrollPosition, setScrollPosition] = useState(0)
 
-  // Removed all the problematic logos
   const serviceProviders: ServiceProviderLogo[] = [
     {
       name: "Legacy Automotive",
@@ -78,7 +77,37 @@ export function ServiceProviderCarousel() {
       width: 180,
       height: 90,
     },
-    // Removed all problematic logos
+    // Added new logos with correct file paths
+    {
+      name: "Uptown Towing NYC",
+      src: "/logos/uptown-towing.png",
+      width: 200,
+      height: 90,
+    },
+    {
+      name: "Towing Masters",
+      src: "/logos/towing-masters.png",
+      width: 200,
+      height: 90,
+    },
+    {
+      name: "Towing Austin Pros",
+      src: "/logos/towing-austin.png",
+      width: 180,
+      height: 90,
+    },
+    {
+      name: "Sands Point Auto Body",
+      src: "/logos/sands-point-auto.jpeg",
+      width: 200,
+      height: 90,
+    },
+    {
+      name: "Vail Valley Towing",
+      src: "/logos/vail-valley-towing.webp",
+      width: 240,
+      height: 90,
+    },
   ]
 
   // Duplicate the logos to create a seamless infinite scroll effect
