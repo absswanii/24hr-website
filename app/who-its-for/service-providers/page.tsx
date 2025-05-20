@@ -1,16 +1,12 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Wrench, DollarSign, Calendar, Users, BarChart3 } from "lucide-react"
+import { Wrench, Clock, DollarSign, Shield, Smartphone } from "lucide-react"
 import { HeroSection } from "@/components/hero-section"
 
-// Import the GallopEffect component
-// import { GallopEffect } from "@/components/gallop-effect"
-
-// Update the metadata
 export const metadata = {
-  title: "For Owner Operators & Mechanics | 24Hr Truck Services & AI Concierge",
+  title: "For Mechanics & Independent Repair Shops | 24Hr Truck Services & AI Concierge",
   description:
-    "Join our network of skilled mechanics and service providers to grow your business and connect with customers nationwide.",
+    "Take control of your mechanic career with 24Hr Truck Services. Access a steady stream of jobs, eliminate marketing burdens, and work on your own terms.",
 }
 
 export default function ServiceProvidersPage() {
@@ -18,8 +14,8 @@ export default function ServiceProvidersPage() {
     <>
       {/* Hero Section */}
       <HeroSection
-        title="24Hr Truck Services & AI Concierge for Owner Operators & Mechanics"
-        description="Join our nationwide network of skilled mechanics and grow your business with steady work and streamlined operations."
+        title="24Hr Concierge for Service Providers"
+        description="Independence redefined: Take control of your time, eliminate marketing burdens, and build lasting customer loyalty."
         showWave={true}
       >
         <div className="inline-block bg-white/10 p-3 rounded-full mb-4">
@@ -32,32 +28,117 @@ export default function ServiceProvidersPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Partner With Us</h2>
+              <h2 className="text-3xl font-bold mb-6">Your Mechanic Journey Starts Here</h2>
               <p className="text-lg text-gray-700 mb-6">
-                As a mechanic or owner operator in the commercial truck industry, finding consistent work and managing
-                your business can be challenging. 24HR Truck Fix offers you the opportunity to join our nationwide
-                network of skilled professionals, connecting you with customers who need your expertise.
+                Are you a skilled mechanic looking to take control of your time, eliminate the burdens of marketing and
+                sales, and build lasting customer loyalty? Look no further! Join our innovative mechanic network and
+                experience the freedom to work on your terms, all while accessing a steady stream of jobs from larger
+                fleets seeking your expertise.
               </p>
               <p className="text-lg text-gray-700 mb-6">
-                Our platform streamlines the entire process—from job assignment to payment—allowing you to focus on what
-                you do best: providing quality repair and maintenance services to truck drivers and fleet managers.
+                Our platform connects independent mechanics and repair shops with commercial truck operators who need
+                your specialized skills. We handle the customer acquisition, scheduling, and payment processing,
+                allowing you to focus on what you do best—fixing trucks.
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <Link href="/contact">
+                  <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">Get Started</Button>
+                </Link>
+                <Link href="/contact">
+                  <Button
+                    variant="outline"
+                    className="border-primary text-primary hover:bg-primary hover:text-white w-full sm:w-auto"
+                  >
+                    Contact Us
+                  </Button>
+                </Link>
+              </div>
             </div>
 
-            {/* Key Benefits */}
+            {/* Video Section */}
             <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Key Benefits for Owner Operators</h3>
-              <div className="grid md:grid-cols-2 gap-6">
+              <h3 className="text-2xl font-bold mb-8 text-center">See How It Works</h3>
+              <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="bg-white p-4 rounded-lg shadow-md">
+                  <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-md">
+                    <iframe
+                      title="Mechanic Network Introduction"
+                      src="https://player.vimeo.com/video/744706102?h=8bdbe30cc5"
+                      className="absolute top-0 left-0 w-full h-full"
+                      frameBorder="0"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <h4 className="text-lg font-bold mt-4 mb-2">Take Your Business to the Next Level</h4>
+                  <p className="text-gray-700">
+                    Learn how our platform helps mechanics grow their business with steady work and simplified
+                    operations.
+                  </p>
+                </div>
+
+                <div className="bg-white p-4 rounded-lg shadow-md">
+                  <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-md">
+                    <iframe
+                      title="Mechanic App Demo"
+                      src="https://player.vimeo.com/video/735567298?h=3f002f5cfc"
+                      className="absolute top-0 left-0 w-full h-full"
+                      frameBorder="0"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <h4 className="text-lg font-bold mt-4 mb-2">Our Mobile App in Action</h4>
+                  <p className="text-gray-700">
+                    See how easy it is to manage jobs, communicate with customers, and process payments through our app.
+                  </p>
+                </div>
+
+                <div className="bg-white p-4 rounded-lg shadow-md">
+                  <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-md">
+                    <iframe
+                      title="Mechanic Success Story"
+                      src="https://player.vimeo.com/video/744706015?h=1fda5ad7a2"
+                      className="absolute top-0 left-0 w-full h-full"
+                      frameBorder="0"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <h4 className="text-lg font-bold mt-4 mb-2">Hear From Our Mechanics</h4>
+                  <p className="text-gray-700">
+                    Listen to success stories from mechanics who have transformed their careers with our platform.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Why Choose Independence */}
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold mb-8 text-center">Why Choose Independence With Our Mechanic App?</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <div className="flex items-start">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <Clock className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">Work On Your Schedule</h4>
+                      <p className="text-gray-700">
+                        Set your own hours and availability. Accept jobs that fit your schedule and expertise, giving
+                        you complete control over your work-life balance.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="bg-white p-6 rounded-lg shadow-md">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
                       <DollarSign className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Steady Income</h4>
+                      <h4 className="text-xl font-bold mb-2">Maximize Your Earnings</h4>
                       <p className="text-gray-700">
-                        Access a consistent stream of service requests from our nationwide customer base, helping you
-                        build a stable business.
+                        Eliminate costly marketing expenses and downtime between jobs. Our platform keeps your schedule
+                        full with high-value repair work from commercial fleets.
                       </p>
                     </div>
                   </div>
@@ -66,13 +147,13 @@ export default function ServiceProvidersPage() {
                 <div className="bg-white p-6 rounded-lg shadow-md">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <Calendar className="h-6 w-6 text-primary" />
+                      <Smartphone className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Flexible Scheduling</h4>
+                      <h4 className="text-xl font-bold mb-2">Easy-to-Use Mobile App</h4>
                       <p className="text-gray-700">
-                        Choose when you're available for work and what types of jobs you want to accept, maintaining
-                        control over your schedule.
+                        Manage your entire business from our intuitive mobile app. Accept jobs, communicate with
+                        customers, process payments, and track your earnings—all in one place.
                       </p>
                     </div>
                   </div>
@@ -81,28 +162,13 @@ export default function ServiceProvidersPage() {
                 <div className="bg-white p-6 rounded-lg shadow-md">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <Users className="h-6 w-6 text-primary" />
+                      <Shield className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Customer Acquisition</h4>
+                      <h4 className="text-xl font-bold mb-2">Guaranteed Payments</h4>
                       <p className="text-gray-700">
-                        We handle marketing and customer acquisition, bringing you pre-qualified customers without the
-                        hassle and expense.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                  <div className="flex items-start">
-                    <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <BarChart3 className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-bold mb-2">Business Tools</h4>
-                      <p className="text-gray-700">
-                        Access our owner operator platform with digital invoicing, payment processing, and business
-                        analytics to streamline your operations.
+                        No more chasing payments or dealing with billing issues. We ensure you get paid promptly for
+                        every job completed through our secure payment system.
                       </p>
                     </div>
                   </div>
@@ -112,7 +178,7 @@ export default function ServiceProvidersPage() {
 
             {/* How It Works */}
             <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">How It Works for Owner Operators</h3>
+              <h3 className="text-2xl font-bold mb-6">How It Works for Mechanics</h3>
               <div className="bg-gray-50 p-6 rounded-lg">
                 <ol className="space-y-6">
                   <li className="flex">
@@ -120,10 +186,10 @@ export default function ServiceProvidersPage() {
                       1
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Apply to Join</h4>
+                      <h4 className="text-xl font-bold mb-2">Join Our Network</h4>
                       <p className="text-gray-700">
-                        Complete our application process, including verification of your qualifications, experience, and
-                        insurance coverage.
+                        Complete a simple application process, verifying your qualifications, experience, and insurance
+                        coverage. Once approved, you'll gain access to our job marketplace.
                       </p>
                     </div>
                   </li>
@@ -132,10 +198,10 @@ export default function ServiceProvidersPage() {
                       2
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Set Your Availability</h4>
+                      <h4 className="text-xl font-bold mb-2">Receive Job Notifications</h4>
                       <p className="text-gray-700">
-                        Once approved, set your service area, availability hours, and the types of repairs you
-                        specialize in through our owner operator portal.
+                        Browse available jobs in your area or receive instant notifications when new opportunities match
+                        your skills and availability. Review job details, location, and estimated completion time.
                       </p>
                     </div>
                   </li>
@@ -144,10 +210,10 @@ export default function ServiceProvidersPage() {
                       3
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Receive Job Requests</h4>
+                      <h4 className="text-xl font-bold mb-2">Accept Jobs You Want</h4>
                       <p className="text-gray-700">
-                        Get notified of service requests in your area that match your skills and availability. Accept
-                        the jobs that work for you.
+                        Choose the jobs that interest you and fit your schedule. No pressure to accept anything that
+                        doesn't work for you—you maintain complete control over your workload.
                       </p>
                     </div>
                   </li>
@@ -156,10 +222,10 @@ export default function ServiceProvidersPage() {
                       4
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Perform Quality Work</h4>
+                      <h4 className="text-xl font-bold mb-2">Complete Repairs</h4>
                       <p className="text-gray-700">
-                        Complete the repairs or maintenance according to our quality standards, documenting your work
-                        through our app.
+                        Perform the necessary repairs or maintenance according to industry standards. Document your work
+                        through our app with photos and detailed notes for transparency.
                       </p>
                     </div>
                   </li>
@@ -168,10 +234,10 @@ export default function ServiceProvidersPage() {
                       5
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Get Paid Quickly</h4>
+                      <h4 className="text-xl font-bold mb-2">Get Paid Fast</h4>
                       <p className="text-gray-700">
-                        Receive payment for your services through our secure payment system, with faster processing than
-                        traditional methods.
+                        Receive payment directly to your account within 48 hours of job completion. No invoicing, no
+                        collections, no hassle—just reliable income for your expertise.
                       </p>
                     </div>
                   </li>
@@ -179,12 +245,199 @@ export default function ServiceProvidersPage() {
               </div>
             </div>
 
+            {/* Services You Can Offer */}
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold mb-6">Services You Can Offer</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h4 className="text-xl font-bold mb-3">Preventive Maintenance</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Oil changes and fluid services</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Brake inspections and service</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Tire rotations and replacements</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Filter replacements</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h4 className="text-xl font-bold mb-3">Diagnostic Services</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Engine diagnostic scanning</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Electrical system troubleshooting</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Performance testing</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Emissions system analysis</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h4 className="text-xl font-bold mb-3">Repair Services</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Engine repairs and rebuilds</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Transmission service</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Suspension and steering repairs</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Electrical system repairs</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md">
+                  <h4 className="text-xl font-bold mb-3">Emergency Services</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Roadside assistance</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Jump starts and battery service</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Tire changes and repairs</span>
+                    </li>
+                    <li className="flex items-center">
+                      <div className="bg-primary/10 p-1 rounded-full mr-3">
+                        <svg className="h-3 w-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span>Mobile fuel delivery</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial */}
+            <div className="mb-16">
+              <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
+                <div className="flex items-center mb-4">
+                  <div className="text-yellow-400 flex">
+                    {[...Array(5)].map((_, i) => (
+                      <svg
+                        key={i}
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-.181h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-700 text-lg italic mb-6">
+                  "After 15 years working for a large repair shop, I decided to take control of my career. Joining the
+                  24HR Truck Fix network gave me the independence I wanted without sacrificing income stability. I now
+                  work fewer hours but make more money, and I get to choose exactly when and where I work. The app makes
+                  everything simple—from accepting jobs to getting paid. It's transformed my life as a mechanic."
+                </p>
+                <div className="font-bold">Michael R.</div>
+                <div className="text-gray-600">Independent Diesel Technician, Atlanta, GA</div>
+              </div>
+            </div>
+
             {/* Requirements */}
             <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Owner Operator Requirements</h3>
+              <h3 className="text-2xl font-bold mb-6">Requirements to Join</h3>
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <p className="text-lg text-gray-700 mb-6">
-                  To join our network of owner operators, you'll need to meet the following requirements:
+                  To join our network of independent mechanics, you'll need to meet the following requirements:
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-start">
@@ -247,40 +500,11 @@ export default function ServiceProvidersPage() {
               </div>
             </div>
 
-            {/* Testimonial */}
-            <div className="mb-16">
-              <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
-                <div className="flex items-center mb-4">
-                  <div className="text-yellow-400 flex">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-.181h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                </div>
-                <p className="text-gray-700 text-lg italic mb-6">
-                  "Joining the 24HR Truck Fix network was the best business decision I've made. Before, I was spending
-                  too much time and money trying to find customers. Now, I get a steady stream of jobs that match my
-                  skills, and the platform handles all the paperwork and payments. My income has increased by 35%, and I
-                  have more time to focus on quality repairs."
-                </p>
-                <div className="font-bold">James W.</div>
-                <div className="text-gray-600">Mobile Diesel Technician, Phoenix, AZ</div>
-              </div>
-            </div>
-
             {/* Call to Action */}
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4">Ready to Grow Your Service Business?</h3>
+              <h3 className="text-2xl font-bold mb-4">Ready to Redefine Your Independence?</h3>
               <p className="text-lg text-gray-700 mb-6">
-                Join our network of skilled mechanics and start receiving job requests in your area.
+                Join our network of skilled mechanics and start building your independent business with our support.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link href="/contact">

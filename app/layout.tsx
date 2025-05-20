@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     "Connecting drivers, mechanics, and service providers nationwide for 24/7 roadside assistance and vehicle repair services.",
   keywords:
     "vehicle repair, roadside assistance, 24 hour service, commercial vehicle repair, fleet maintenance, roadside assistance, breakdown service, dispatch service",
+  icons: {
+    icon: "/favicon.ico",
+  },
     generator: 'v0.dev'
 }
 

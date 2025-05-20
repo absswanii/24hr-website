@@ -1,25 +1,23 @@
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Truck, Clock, BarChart3, ClipboardCheck, Settings, Calendar } from "lucide-react"
+import { Truck, Clock, BarChart3, Shield, Wrench, MapPin, HeadsetIcon as HeadsetMic } from "lucide-react"
 import { HeroSection } from "@/components/hero-section"
-// Import the GallopEffect component
-// import { GallopEffect } from "@/components/gallop-effect"
+import { ServiceProviderCarousel } from "@/components/service-provider-carousel"
 
 // Update the metadata
 export const metadata = {
-  title: "For Fleet Managers | 24Hr Truck Services & AI Concierge",
+  title: "For Fleets | 24Hr Truck Services & AI Concierge",
   description:
-    "Discover how 24Hr Truck Services & AI Concierge helps fleet managers reduce downtime, control maintenance costs, and keep their trucks on the road.",
+    "24Hr Truck Services provides nationwide emergency roadside assistance, preventive maintenance, and repair services for commercial truck fleets.",
 }
 
 export default function FleetsPage() {
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section without background image */}
       <HeroSection
-        title="24Hr Truck Services & AI Concierge for Fleet Managers"
-        description="Comprehensive maintenance solutions to reduce downtime, control costs, and keep your fleet running efficiently."
+        title="24Hr Concierge for Fleets"
+        description="Nationwide emergency roadside assistance and maintenance services for your entire fleet, available 24/7/365."
         showWave={true}
       >
         <div className="inline-block bg-white/10 p-3 rounded-full mb-4">
@@ -27,243 +25,194 @@ export default function FleetsPage() {
         </div>
       </HeroSection>
 
-      {/* Main Content */}
+      {/* Main content section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Fleet Management Solutions</h2>
-              <p className="text-lg text-gray-700 mb-6">
-                Managing a fleet of commercial trucks comes with unique challenges. From unexpected breakdowns to
-                scheduled maintenance, keeping your vehicles on the road requires reliable service partners who
-                understand your business needs.
+              <h2 className="text-3xl font-bold mb-6">Fleet Solutions That Keep You Moving</h2>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                When you're managing a fleet of commercial trucks, every minute of downtime costs money. 24Hr Truck
+                Services provides comprehensive emergency roadside assistance and maintenance services designed
+                specifically for fleets of all sizes.
               </p>
-              <p className="text-lg text-gray-700 mb-6">
-                24HR Truck Fix provides fleet managers with a comprehensive solution for all truck repair and
-                maintenance needs. Our nationwide network of skilled technicians, combined with our advanced fleet
-                management platform, helps you minimize downtime, control costs, and extend the life of your vehicles.
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                Our nationwide network of service providers ensures your drivers get the help they need, when they need
+                it, no matter where they are. With our 24/7/365 service, you can rest assured that your fleet stays on
+                the road and your business keeps moving.
               </p>
             </div>
 
-            {/* Key Benefits */}
+            {/* Services Section */}
             <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Key Benefits for Fleet Managers</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-bold mb-8">Our Fleet Services</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-start mb-4">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <Wrench className="h-6 w-6 text-primary" />
+                    </div>
+                    <h4 className="text-xl font-bold">Emergency Roadside Repairs</h4>
+                  </div>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    Our mobile technicians come to your driver's location to perform on-site repairs for breakdowns,
+                    tire issues, electrical problems, and more. We get your trucks back on the road as quickly as
+                    possible.
+                  </p>
+                </div>
+
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-start mb-4">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <Truck className="h-6 w-6 text-primary" />
+                    </div>
+                    <h4 className="text-xl font-bold">Towing & Recovery</h4>
+                  </div>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    When on-site repairs aren't possible, our heavy-duty towing service will safely transport your
+                    vehicle to the nearest repair facility. We handle all types of commercial vehicles, including semis,
+                    box trucks, and specialized equipment.
+                  </p>
+                </div>
+
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-start mb-4">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <Shield className="h-6 w-6 text-primary" />
+                    </div>
+                    <h4 className="text-xl font-bold">Preventive Maintenance</h4>
+                  </div>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    Keep your fleet in optimal condition with our scheduled maintenance programs. We help you prevent
+                    costly breakdowns and extend the life of your vehicles with regular inspections, fluid changes, and
+                    component replacements.
+                  </p>
+                </div>
+
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-start mb-4">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <MapPin className="h-6 w-6 text-primary" />
+                    </div>
+                    <h4 className="text-xl font-bold">Nationwide Coverage</h4>
+                  </div>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    With service providers across all 50 states, we ensure your drivers receive consistent, high-quality
+                    service no matter where they travel. One call connects you to our entire network of qualified
+                    technicians.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* How It Works */}
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold mb-8">How Our Fleet Service Works</h3>
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+                <ol className="space-y-6">
+                  <li className="flex">
+                    <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">
+                      1
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg mb-2">Driver Calls Our 24/7 Hotline</h4>
+                      <p className="text-gray-700 dark:text-gray-300">
+                        When a breakdown occurs, your driver calls our dedicated fleet service number. Our AI-powered
+                        system immediately identifies them as part of your fleet.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex">
+                    <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">
+                      2
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg mb-2">We Dispatch the Nearest Service Provider</h4>
+                      <p className="text-gray-700 dark:text-gray-300">
+                        Our system locates the closest qualified technician or towing service and dispatches them to
+                        your driver's location. Fleet managers receive real-time updates.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex">
+                    <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">
+                      3
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg mb-2">Service Is Performed</h4>
+                      <p className="text-gray-700 dark:text-gray-300">
+                        Our technician arrives and performs the necessary repairs or towing service. All work is
+                        documented and shared with your fleet management team.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex">
+                    <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 flex-shrink-0">
+                      4
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg mb-2">Simplified Billing</h4>
+                      <p className="text-gray-700 dark:text-gray-300">
+                        All services are billed directly to your fleet account. You receive detailed reports of all
+                        services performed, making expense tracking and management simple.
+                      </p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            {/* Benefits */}
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold mb-6">Why Fleets Choose 24Hr Truck Services</h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
                       <Clock className="h-6 w-6 text-primary" />
                     </div>
                     <div>
                       <h4 className="text-xl font-bold mb-2">Reduced Downtime</h4>
-                      <p className="text-gray-700">
-                        Our 24/7 service and nationwide coverage ensure your trucks get back on the road quickly,
-                        minimizing costly downtime.
+                      <p className="text-gray-700 dark:text-gray-300">
+                        Our average response time is under 60 minutes, getting your drivers back on the road quickly.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
                       <BarChart3 className="h-6 w-6 text-primary" />
                     </div>
                     <div>
                       <h4 className="text-xl font-bold mb-2">Cost Control</h4>
-                      <p className="text-gray-700">
-                        Transparent pricing, consolidated billing, and preventive maintenance programs help you manage
-                        and reduce overall maintenance costs.
+                      <p className="text-gray-700 dark:text-gray-300">
+                        Transparent pricing and consolidated billing help you manage maintenance expenses effectively.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <ClipboardCheck className="h-6 w-6 text-primary" />
+                      <HeadsetMic className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Compliance Management</h4>
-                      <p className="text-gray-700">
-                        Our detailed documentation and inspection services help ensure your fleet remains DOT compliant
-                        at all times.
+                      <h4 className="text-xl font-bold mb-2">24/7 Support</h4>
+                      <p className="text-gray-700 dark:text-gray-300">
+                        Our service center is staffed around the clock, ensuring help is always available.
                       </p>
                     </div>
                   </div>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                  <div className="flex items-start">
-                    <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <Settings className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-bold mb-2">Fleet Analytics</h4>
-                      <p className="text-gray-700">
-                        Gain valuable insights into your fleet's performance, maintenance patterns, and cost trends
-                        through our comprehensive reporting tools.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Fleet Management Platform */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Our Fleet Management Platform</h3>
-              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
-                <div className="aspect-video relative mb-6">
-                  <Image
-                    src="/fleet-management-software-trucks.png"
-                    alt="24HR Truck Fix Fleet Management Platform"
-                    fill
-                    className="object-cover rounded-lg"
-                  />
-                </div>
-                <p className="text-lg text-gray-700 mb-6">
-                  Our advanced fleet management platform provides you with complete visibility and control over your
-                  fleet's maintenance needs:
-                </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <Calendar className="h-4 w-4 text-primary" />
-                    </div>
-                    <span>Schedule and track preventive maintenance for your entire fleet</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <Calendar className="h-4 w-4 text-primary" />
-                    </div>
-                    <span>Receive real-time updates on repairs and service status</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <Calendar className="h-4 w-4 text-primary" />
-                    </div>
-                    <span>Access comprehensive maintenance history for each vehicle</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <Calendar className="h-4 w-4 text-primary" />
-                    </div>
-                    <span>Generate detailed reports on maintenance costs and trends</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <Calendar className="h-4 w-4 text-primary" />
-                    </div>
-                    <span>Manage and approve repair authorizations from anywhere</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Service Plans */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Fleet Service Plans</h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                  <h4 className="text-xl font-bold mb-2">Basic Fleet</h4>
-                  <p className="text-gray-600 mb-4">For small fleets (2-10 vehicles)</p>
-                  <ul className="space-y-2 mb-6">
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>24/7 emergency repairs</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Basic maintenance tracking</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Monthly reporting</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>10% discount on all services</span>
-                    </li>
-                  </ul>
-                  <Link href="/pricing">
-                    <Button className="w-full bg-primary hover:bg-primary/90">Learn More</Button>
-                  </Link>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md border-2 border-primary transform scale-105 z-10">
-                  <div className="bg-primary text-white py-1 px-4 rounded text-sm font-bold inline-block mb-2">
-                    POPULAR
-                  </div>
-                  <h4 className="text-xl font-bold mb-2">Premium Fleet</h4>
-                  <p className="text-gray-600 mb-4">For medium fleets (11-50 vehicles)</p>
-                  <ul className="space-y-2 mb-6">
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Priority emergency response</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Preventive maintenance program</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Weekly reporting</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>15% discount on all services</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Dedicated account manager</span>
-                    </li>
-                  </ul>
-                  <Link href="/pricing">
-                    <Button className="w-full bg-primary hover:bg-primary/90">Learn More</Button>
-                  </Link>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                  <h4 className="text-xl font-bold mb-2">Enterprise Fleet</h4>
-                  <p className="text-gray-600 mb-4">For large fleets (50+ vehicles)</p>
-                  <ul className="space-y-2 mb-6">
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>VIP emergency response</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Custom maintenance programs</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Real-time reporting</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>20% discount on all services</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Senior account executive</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="text-primary mr-2">•</div>
-                      <span>Quarterly fleet analysis</span>
-                    </li>
-                  </ul>
-                  <Link href="/pricing">
-                    <Button className="w-full bg-primary hover:bg-primary/90">Learn More</Button>
-                  </Link>
                 </div>
               </div>
             </div>
 
             {/* Testimonial */}
             <div className="mb-16">
-              <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center mb-4">
                   <div className="text-yellow-400 flex">
                     {[...Array(5)].map((_, i) => (
@@ -279,22 +228,22 @@ export default function FleetsPage() {
                     ))}
                   </div>
                 </div>
-                <p className="text-gray-700 text-lg italic mb-6">
-                  "Since partnering with 24HR Truck Fix, we've reduced our fleet's downtime by 35% and cut maintenance
-                  costs by 22%. Their nationwide coverage ensures our drivers get the same quality service no matter
-                  where they are, and the fleet management platform gives me complete visibility into our maintenance
-                  operations."
+                <p className="text-gray-700 dark:text-gray-300 text-lg italic mb-6">
+                  "24Hr Truck Services has been a game-changer for our fleet operations. Their response times are
+                  incredible, and the quality of service is consistent across the country. Our drivers feel confident
+                  knowing help is just a phone call away, and our maintenance costs have decreased significantly since
+                  we started using their preventive maintenance program."
                 </p>
-                <div className="font-bold">Michael T.</div>
-                <div className="text-gray-600">Fleet Manager, Interstate Logistics</div>
+                <div className="font-bold">Robert K.</div>
+                <div className="text-gray-600 dark:text-gray-400">Operations Director, National Freight Systems</div>
               </div>
             </div>
 
             {/* Call to Action */}
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4">Ready to Optimize Your Fleet Management?</h3>
-              <p className="text-lg text-gray-700 mb-6">
-                Contact us today to discuss how we can create a customized fleet maintenance solution for your business.
+              <h3 className="text-2xl font-bold mb-4">Ready to Keep Your Fleet Moving?</h3>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                Contact us today to discuss how our fleet services can reduce your downtime and maintenance costs.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link href="/contact">
@@ -303,9 +252,9 @@ export default function FleetsPage() {
                 <Link href="/pricing">
                   <Button
                     variant="outline"
-                    className="border-primary text-primary hover:bg-primary hover:text-white w-full sm:w-auto"
+                    className="border-primary text-primary hover:bg-primary hover:text-white w-full sm:w-auto dark:text-primary dark:hover:text-white"
                   >
-                    View Fleet Plans
+                    View Pricing
                   </Button>
                 </Link>
               </div>
@@ -313,6 +262,9 @@ export default function FleetsPage() {
           </div>
         </div>
       </section>
+
+      {/* Service Provider Carousel Section */}
+      <ServiceProviderCarousel />
     </>
   )
 }

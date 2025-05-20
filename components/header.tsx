@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X, Phone, ChevronDown, Truck, Users, Wrench, Building2, GraduationCap } from "lucide-react"
+import { Menu, X, Phone, ChevronDown, Truck, Users, Wrench, Building2, GraduationCap, Bot } from "lucide-react"
 import { Button } from "@/components/custom-button"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -64,6 +64,7 @@ export default function Header() {
 
   const mainNavItems = [
     { label: "Home", href: "/" },
+    { label: "AI", href: "/ai", icon: Bot },
     { label: "How It Works", href: "/how-it-works" },
     { label: "Services", href: "/services" },
     {
@@ -74,7 +75,7 @@ export default function Header() {
         { label: "Insurance Companies", href: "/who-its-for/insurance-companies", icon: Building2 },
         { label: "Fleets", href: "/who-its-for/fleets", icon: Truck },
         { label: "Owner Operators", href: "/who-its-for/owner-operators", icon: Users },
-        { label: "Owner Operators", href: "/who-its-for/service-providers", icon: Wrench },
+        { label: "Service Providers", href: "/who-its-for/service-providers", icon: Wrench },
         { label: "Students", href: "/who-its-for/students", icon: GraduationCap },
       ],
     },
@@ -103,9 +104,14 @@ export default function Header() {
 
           {/* Mobile menu button */}
           <div className="flex items-center gap-4 md:hidden">
-            <a href="tel:+18004TRUCKS" className="flex items-center text-primary font-medium mr-2">
+            <a
+              href="tel:+13022731234"
+              className="flex items-center text-primary font-medium mr-2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Phone size={18} className="mr-1" />
-              <span className="hidden sm:inline">1-800-4-TRUCKS</span>
+              <span className="hidden sm:inline">+1 302 273-1234</span>
             </a>
             <button
               className="p-2 text-gray-600 hover:text-primary transition-colors"
@@ -184,12 +190,13 @@ export default function Header() {
                   key={item.label}
                   href={item.href}
                   className={cn(
-                    "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    "px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center",
                     isActive(item.href)
                       ? "text-primary bg-primary/10"
                       : "text-gray-700 hover:text-primary hover:bg-gray-50",
                   )}
                 >
+                  {item.icon && <item.icon className="mr-1 h-4 w-4" />}
                   {item.label}
                 </Link>
               ),
@@ -198,21 +205,26 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="tel:+18004TRUCKS" className="flex items-center text-primary font-medium">
+            <a
+              href="tel:+13022731234"
+              className="flex items-center text-primary font-medium"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Phone size={18} className="mr-1" />
-              1-800-4-TRUCKS
+              +1 302 273-1234
             </a>
             <ThemeDropdown />
-            <Link href="/login">
+            <a href="https://portal.24hrtruckfix.com/auth/signin" target="_blank" rel="noopener noreferrer">
               <Button variant="outline" size="sm">
                 Login
               </Button>
-            </Link>
-            <Link href="/get-started">
+            </a>
+            <a href="https://portal.24hrtruckfix.com/auth/signup" target="_blank" rel="noopener noreferrer">
               <Button variant="primary" size="sm">
                 Get Started
               </Button>
-            </Link>
+            </a>
           </div>
 
           {/* Mobile menu */}
@@ -278,11 +290,12 @@ export default function Header() {
                         key={item.label}
                         href={item.href}
                         className={cn(
-                          "font-medium py-2",
+                          "font-medium py-2 flex items-center",
                           isActive(item.href) ? "text-primary" : "text-gray-700 hover:text-primary",
                         )}
                         onClick={closeMenu}
                       >
+                        {item.icon && <item.icon className="mr-2 h-5 w-5" />}
                         {item.label}
                       </Link>
                     ),
@@ -291,16 +304,26 @@ export default function Header() {
                     <div className="flex justify-center mb-4">
                       <ThemeDropdown />
                     </div>
-                    <Link href="/login" onClick={closeMenu}>
+                    <a
+                      href="https://portal.24hrtruckfix.com/auth/signin"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={closeMenu}
+                    >
                       <Button variant="outline" fullWidth>
                         Login
                       </Button>
-                    </Link>
-                    <Link href="/get-started" onClick={closeMenu}>
+                    </a>
+                    <a
+                      href="https://portal.24hrtruckfix.com/auth/signup"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={closeMenu}
+                    >
                       <Button variant="primary" fullWidth>
                         Get Started
                       </Button>
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </motion.div>

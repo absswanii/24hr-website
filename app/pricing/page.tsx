@@ -6,8 +6,9 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Building2, Truck, User, ArrowRight, ArrowLeft, CheckCircle2 } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Building2, Truck, User, ArrowRight, ArrowLeft, CheckCircle2, Calendar, PhoneCall } from "lucide-react"
 import { GallopEffect } from "@/components/gallop-effect"
 import { WaveDivider } from "@/components/wave-divider"
 import { cn } from "@/lib/utils"
@@ -21,6 +22,20 @@ type ServiceOption = {
   description: string
   icon: React.ReactNode
   basePrice: number
+}
+
+// Define the contact form state type
+type ContactInfo = {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+}
+
+// Define the insurance questions state type
+type InsuranceQuestions = {
+  policyHolderCount: string
+  costPerPolicy: string
 }
 
 // Define the service options
@@ -59,10 +74,46 @@ export default function PricingPage() {
   // Form state
   const [phase, setPhase] = useState<number>(1)
   const [businessType, setBusinessType] = useState<BusinessType>("")
-  const [vehicleCount, setVehicleCount] = useState<SizeRange>("")
-  const [requestCount, setRequestCount] = useState<SizeRange>("")
+  const [vehicleCount, setVehicleCount] = useState<string>("")
+  const [requestCount, setRequestCount] = useState<string>("")
   const [selectedServices, setSelectedServices] = useState<string[]>([])
   const [showResult, setShowResult] = useState<boolean>(false)
+
+  // New state for contact info
+  const [contactInfo, setContactInfo] = useState<ContactInfo>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  })
+
+  // New state for insurance questions
+  const [insuranceQuestions, setInsuranceQuestions] = useState<InsuranceQuestions>({
+    policyHolderCount: "",
+    costPerPolicy: "",
+  })
+
+  // Handle contact info changes
+  const handleContactInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setContactInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  // Handle insurance question changes with integer validation
+  const handleInsuranceQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+
+    // Only allow integer values (empty string or numbers)
+    if (value === "" || /^[0-9]+$/.test(value)) {
+      setInsuranceQuestions((prev) => ({
+        ...prev,
+        [name]: value,
+      }))
+    }
+  }
 
   // Handle service selection
   const toggleService = (serviceId: string) => {
@@ -71,32 +122,129 @@ export default function PricingPage() {
     )
   }
 
+  // Get policy holder count as a number
+  const getPolicyHolderCount = (): number => {
+    const count = Number.parseInt(insuranceQuestions.policyHolderCount, 10)
+    return isNaN(count) ? 0 : count
+  }
+
+  // Get vehicle count as a number
+  const getVehicleCount = (): number => {
+    const count = Number.parseInt(vehicleCount, 10)
+    return isNaN(count) ? 0 : count
+  }
+
   // Calculate estimated price
   const calculatePrice = () => {
-    const basePrice = 25 // Base price for all plans
+    // Special pricing for insurance companies
+    if (businessType === "insurance") {
+      const policyCount = getPolicyHolderCount()
 
-    // Add service costs
-    const serviceCost = selectedServices.reduce((total, serviceId) => {
-      const service = serviceOptions.find((s) => s.id === serviceId)
-      return total + (service?.basePrice || 0)
-    }, 0)
+      // If more than 1000 policy holders, they qualify for enterprise plan
+      if (policyCount > 1000) {
+        return "Enterprise"
+      }
 
-    // Apply size multiplier
-    let sizeMultiplier = 1
-    if (vehicleCount === "101-500") sizeMultiplier = 1.5
-    if (vehicleCount === "500+") sizeMultiplier = 2
+      // Base price for insurance is $50/month
+      let price = 50
 
-    return Math.round((basePrice + serviceCost) * sizeMultiplier)
+      // Add $10 for every 100 policies
+      price += Math.floor(policyCount / 100) * 10
+
+      // Add service costs
+      const serviceCost = selectedServices.reduce((total, serviceId) => {
+        const service = serviceOptions.find((s) => s.id === serviceId)
+        return total + (service?.basePrice || 0)
+      }, 0)
+
+      return price + serviceCost
+    }
+
+    // For fleet and owner-operator, use $4 per vehicle
+    const vehicles = getVehicleCount()
+    if (isNaN(vehicles)) return 0
+
+    return vehicles * 4
   }
 
   // Check if enterprise plan is needed
   const isEnterprise = () => {
-    return (vehicleCount === "500+" || requestCount === "500+") && selectedServices.length > 2
+    // For insurance companies, check policy holder count
+    if (businessType === "insurance") {
+      return getPolicyHolderCount() > 1000
+    }
+
+    // For fleet and owner-operator, check if vehicle count > 5
+    const vehicles = getVehicleCount()
+    return vehicles > 5
+  }
+
+  // Get the total number of phases based on business type
+  const getTotalPhases = () => {
+    // Base phases: Business Type + Contact Info + Services + Schedule Call + Result
+    const basePhases = 5
+
+    // Add question phases based on business type
+    if (businessType === "insurance") {
+      return basePhases + 2 // Two additional questions for insurance
+    } else if (businessType === "fleet" || businessType === "owner-operator") {
+      return basePhases + 2 // Two additional questions for fleet/owner-operator
+    }
+
+    return basePhases
+  }
+
+  // Get the current question phase title
+  const getQuestionPhaseTitle = () => {
+    if (businessType === "insurance") {
+      if (phase === 3) {
+        return "Policy Holder Coverage"
+      } else if (phase === 4) {
+        return "Current Cost Per Policy"
+      }
+    } else {
+      if (phase === 3) {
+        return "Vehicle Count"
+      } else if (phase === 4) {
+        return "Monthly Requests"
+      }
+    }
+
+    if (phase === getTotalPhases() - 1) {
+      return "Schedule a Consultation"
+    }
+
+    return ""
+  }
+
+  // Get the current question phase description
+  const getQuestionPhaseDescription = () => {
+    if (businessType === "insurance") {
+      if (phase === 3) {
+        return ""
+      } else if (phase === 4) {
+        return 'Investopedia states, "The average cost of adding roadside assistance to an auto insurance policy in the U.S. typically ranges from $10 to $30 per year per vehicle, depending on the insurer and level of coverage."'
+      }
+    } else {
+      if (phase === 3) {
+        return "How many vehicles do you have in your fleet?"
+      } else if (phase === 4) {
+        return "How many vehicle-fix requests do you get per month?"
+      }
+    }
+
+    if (phase === getTotalPhases() - 1) {
+      return isEnterprise()
+        ? "A representative from our sales team will contact you soon to discuss our enterprise solution."
+        : "A representative from our sales team will contact you soon. You can also schedule a time that works best for you."
+    }
+
+    return ""
   }
 
   // Handle form navigation
   const nextPhase = () => {
-    if (phase < 3) {
+    if (phase < getTotalPhases()) {
       setPhase(phase + 1)
     } else {
       setShowResult(true)
@@ -115,9 +263,26 @@ export default function PricingPage() {
       case 1:
         return businessType !== ""
       case 2:
-        return businessType === "insurance" ? requestCount !== "" : vehicleCount !== "" && requestCount !== ""
+        return (
+          contactInfo.firstName !== "" &&
+          contactInfo.lastName !== "" &&
+          contactInfo.email !== "" &&
+          contactInfo.phone !== ""
+        )
       case 3:
+        if (businessType === "insurance") {
+          return insuranceQuestions.policyHolderCount !== ""
+        }
+        return vehicleCount !== ""
+      case 4:
+        if (businessType === "insurance") {
+          return insuranceQuestions.costPerPolicy !== ""
+        }
+        return requestCount !== ""
+      case 5:
         return selectedServices.length > 0
+      case 6: // Schedule call phase
+        return true // Always complete, as scheduling is optional
       default:
         return false
     }
@@ -145,6 +310,12 @@ export default function PricingPage() {
     exit: { y: -20, opacity: 0 },
   }
 
+  // Calculate the progress percentage
+  const progressPercentage = () => {
+    const displayedTotalPhases = getTotalPhases() - 1
+    return ((phase - 1) / (displayedTotalPhases - 1)) * 100
+  }
+
   return (
     <div className="container mx-auto py-12 px-4">
       {/* Hero Section */}
@@ -163,24 +334,15 @@ export default function PricingPage() {
         {/* Progress Indicator */}
         <div className="mb-8">
           <div className="flex justify-between items-center">
-            {[1, 2, 3].map((step) => (
-              <div key={step} className="flex flex-col items-center">
-                <div
-                  className={cn(
-                    "w-10 h-10 rounded-full flex items-center justify-center text-white font-medium",
-                    phase >= step ? "bg-primary" : "bg-gray-300",
-                  )}
-                >
-                  {step}
-                </div>
-                <span className="text-sm mt-2">{step === 1 ? "Business Type" : step === 2 ? "Size" : "Services"}</span>
-              </div>
-            ))}
+            <div className="text-sm font-medium">
+              Step {phase} of {getTotalPhases() - 1}
+            </div>
+            <div className="text-sm font-medium">{Math.round(progressPercentage())}% Complete</div>
           </div>
-          <div className="relative h-2 bg-gray-200 rounded-full mt-4">
+          <div className="relative h-2 bg-gray-200 rounded-full mt-2">
             <div
               className="absolute top-0 left-0 h-full bg-primary rounded-full transition-all duration-300"
-              style={{ width: `${((phase - 1) / 2) * 100}%` }}
+              style={{ width: `${progressPercentage()}%` }}
             ></div>
           </div>
         </div>
@@ -192,15 +354,19 @@ export default function PricingPage() {
               {phase === 1
                 ? "Tell us about your business"
                 : phase === 2
-                  ? "What's the size of your operation?"
-                  : "Which services do you need?"}
+                  ? "Your contact information"
+                  : phase === getTotalPhases() - 2
+                    ? "Which services do you need?"
+                    : getQuestionPhaseTitle()}
             </CardTitle>
             <CardDescription>
               {phase === 1
                 ? "Select the option that best describes your business"
                 : phase === 2
-                  ? "This helps us tailor our solution to your needs"
-                  : "Select all services that are relevant to your business"}
+                  ? "Please provide your contact details"
+                  : phase === getTotalPhases() - 2
+                    ? "Select all services that are relevant to your business"
+                    : getQuestionPhaseDescription()}
             </CardDescription>
           </CardHeader>
 
@@ -271,7 +437,7 @@ export default function PricingPage() {
                 </motion.div>
               )}
 
-              {/* Phase 2: Size Questions */}
+              {/* Phase 2: Contact Information */}
               {phase === 2 && (
                 <motion.div
                   key="phase2"
@@ -281,64 +447,186 @@ export default function PricingPage() {
                   exit="exit"
                   className="space-y-6"
                 >
+                  <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">First Name</Label>
+                      <Input
+                        id="firstName"
+                        name="firstName"
+                        value={contactInfo.firstName}
+                        onChange={handleContactInfoChange}
+                        placeholder="John"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last Name</Label>
+                      <Input
+                        id="lastName"
+                        name="lastName"
+                        value={contactInfo.lastName}
+                        onChange={handleContactInfoChange}
+                        placeholder="Doe"
+                        required
+                      />
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={contactInfo.email}
+                      onChange={handleContactInfoChange}
+                      placeholder="john.doe@example.com"
+                      required
+                    />
+                  </motion.div>
+
+                  <motion.div variants={itemVariants} className="space-y-2">
+                    <Label htmlFor="phone">Phone Number</Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={contactInfo.phone}
+                      onChange={handleContactInfoChange}
+                      placeholder="(123) 456-7890"
+                      required
+                    />
+                  </motion.div>
+                </motion.div>
+              )}
+
+              {/* Phase 3: First Question */}
+              {phase === 3 && (
+                <motion.div
+                  key="phase3"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="space-y-6"
+                >
                   {businessType === "insurance" ? (
                     <motion.div variants={itemVariants} className="space-y-4">
-                      <label className="block text-sm font-medium text-gray-700">
-                        How many vehicle-fix claims do you get per month?
-                      </label>
-                      <Select value={requestCount} onValueChange={setRequestCount}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select range" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1-100">1 to 100</SelectItem>
-                          <SelectItem value="101-500">101 to 500</SelectItem>
-                          <SelectItem value="500+">500+</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="space-y-2">
+                        <Label htmlFor="policyHolderCount">
+                          Approximately how many policy holders would you like to cover with roadside assistance?
+                        </Label>
+                        <Input
+                          id="policyHolderCount"
+                          name="policyHolderCount"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          value={insuranceQuestions.policyHolderCount}
+                          onChange={handleInsuranceQuestionChange}
+                          placeholder="Enter a number (e.g., 5000)"
+                          required
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Please enter whole numbers only, no decimals or commas.
+                        </p>
+                      </div>
                     </motion.div>
                   ) : (
-                    <>
-                      <motion.div variants={itemVariants} className="space-y-4">
-                        <label className="block text-sm font-medium text-gray-700">
-                          How many vehicles do you have in your fleet?
-                        </label>
-                        <Select value={vehicleCount} onValueChange={setVehicleCount}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select range" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="1-100">1 to 100</SelectItem>
-                            <SelectItem value="101-500">101 to 500</SelectItem>
-                            <SelectItem value="500+">500+</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </motion.div>
-
-                      <motion.div variants={itemVariants} className="space-y-4">
-                        <label className="block text-sm font-medium text-gray-700">
-                          How many vehicle-fix requests do you get per month?
-                        </label>
-                        <Select value={requestCount} onValueChange={setRequestCount}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select range" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="1-100">1 to 100</SelectItem>
-                            <SelectItem value="101-500">101 to 500</SelectItem>
-                            <SelectItem value="500+">500+</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </motion.div>
-                    </>
+                    <motion.div variants={itemVariants} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="vehicleCount">How many vehicles do you have in your fleet?</Label>
+                        <Input
+                          id="vehicleCount"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          value={vehicleCount}
+                          onChange={(e) => {
+                            const value = e.target.value
+                            if (value === "" || /^[0-9]+$/.test(value)) {
+                              setVehicleCount(value)
+                            }
+                          }}
+                          placeholder="Enter number of vehicles"
+                          required
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Please enter whole numbers only, no decimals or commas.
+                        </p>
+                      </div>
+                    </motion.div>
                   )}
                 </motion.div>
               )}
 
-              {/* Phase 3: Service Selection */}
-              {phase === 3 && (
+              {/* Phase 4: Second Question */}
+              {phase === 4 && (
                 <motion.div
-                  key="phase3"
+                  key="phase4"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="space-y-6"
+                >
+                  {businessType === "insurance" ? (
+                    <motion.div variants={itemVariants} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="costPerPolicy">
+                          Could you share avg of what your company typically budgets per vehicle for roadside coverage?
+                        </Label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                          <Input
+                            id="costPerPolicy"
+                            name="costPerPolicy"
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            value={insuranceQuestions.costPerPolicy}
+                            onChange={handleInsuranceQuestionChange}
+                            placeholder="Enter a number (e.g., 20)"
+                            className="pl-7"
+                            required
+                          />
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">Please enter whole numbers only, no decimals.</p>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div variants={itemVariants} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="requestCount">How many vehicle-fix requests do you get per month?</Label>
+                        <Input
+                          id="requestCount"
+                          type="text"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          value={requestCount}
+                          onChange={(e) => {
+                            const value = e.target.value
+                            if (value === "" || /^[0-9]+$/.test(value)) {
+                              setRequestCount(value)
+                            }
+                          }}
+                          placeholder="Enter number of monthly requests"
+                          required
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Please enter whole numbers only, no decimals or commas.
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
+
+              {/* Phase 5: Service Selection */}
+              {phase === 5 && (
+                <motion.div
+                  key="phase5"
                   variants={containerVariants}
                   initial="hidden"
                   animate="visible"
@@ -382,6 +670,65 @@ export default function PricingPage() {
                 </motion.div>
               )}
 
+              {/* Phase 6: Schedule Call */}
+              {phase === 6 && (
+                <motion.div
+                  key="phase6"
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="space-y-6"
+                >
+                  <motion.div variants={itemVariants} className="text-center py-6">
+                    <div className="flex justify-center mb-6">
+                      <div className="bg-primary/10 p-4 rounded-full">
+                        <PhoneCall className="h-12 w-12 text-primary" />
+                      </div>
+                    </div>
+
+                    {isEnterprise() ? (
+                      <>
+                        <h3 className="text-2xl font-bold mb-4">You Qualify for Enterprise Pricing</h3>
+                        <p className="text-lg mb-8">
+                          Based on your needs, we recommend our Enterprise solution. A representative from our sales
+                          team will contact you within 1-2 business days to discuss a custom plan tailored specifically
+                          to your business.
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <h3 className="text-2xl font-bold mb-4">Your Pricing Summary</h3>
+                        <div className="text-4xl font-bold text-primary mb-4">
+                          ${calculatePrice()}
+                          <span className="text-xl text-gray-500">/month</span>
+                        </div>
+                        <p className="text-lg mb-8">
+                          Thank you for providing your information. A representative from our team will contact you
+                          within 1-2 business days to confirm your pricing and answer any questions.
+                        </p>
+                      </>
+                    )}
+
+                    <p className="text-gray-600 mb-8">
+                      Would you prefer to schedule a specific time for the call? Click the button below to book an
+                      appointment that works best for your schedule.
+                    </p>
+                    <Button asChild size="lg" className="bg-primary text-white">
+                      <a
+                        href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center"
+                      >
+                        <Calendar className="mr-2 h-5 w-5" />
+                        Book an Appointment
+                      </a>
+                    </Button>
+                  </motion.div>
+                </motion.div>
+              )}
+
               {/* Results */}
               {showResult && (
                 <motion.div
@@ -396,8 +743,19 @@ export default function PricingPage() {
                     <motion.div variants={itemVariants} className="text-center py-6">
                       <h3 className="text-2xl font-bold mb-4">Enterprise Solution Recommended</h3>
                       <p className="text-gray-600 mb-6">
-                        Based on your needs, we recommend our Enterprise solution. Our team will create a custom plan
-                        tailored specifically to your business.
+                        {businessType === "insurance" ? (
+                          <>
+                            Based on your policy holder count of <strong>{insuranceQuestions.policyHolderCount}</strong>
+                            , you qualify for our Enterprise solution. A representative will reach out to you soon to
+                            discuss a custom plan tailored specifically to your insurance business.
+                          </>
+                        ) : (
+                          <>
+                            Based on your vehicle count of <strong>{vehicleCount}</strong>, you qualify for our
+                            Enterprise solution. Our team will create a custom plan tailored specifically to your
+                            business.
+                          </>
+                        )}
                       </p>
                       <Button asChild size="lg" className="bg-primary text-white">
                         <a
@@ -422,32 +780,36 @@ export default function PricingPage() {
                       <div className="bg-gray-50 p-4 rounded-lg mb-6">
                         <h4 className="font-medium mb-2">Price Breakdown</h4>
                         <div className="space-y-2">
-                          <div className="flex justify-between">
-                            <span>Base Plan</span>
-                            <span>$25</span>
-                          </div>
-                          {selectedServices.map((serviceId) => {
-                            const service = serviceOptions.find((s) => s.id === serviceId)
-                            if (!service) return null
-                            return (
-                              <div key={service.id} className="flex justify-between">
-                                <span>{service.title}</span>
-                                <span>${service.basePrice}</span>
+                          {businessType === "insurance" ? (
+                            <>
+                              <div className="flex justify-between">
+                                <span>Base Insurance Plan</span>
+                                <span>$50</span>
                               </div>
-                            )
-                          })}
-                          {(vehicleCount === "101-500" || requestCount === "101-500") && (
+                              <div className="flex justify-between">
+                                <span>Policy Volume ({getPolicyHolderCount()} policies)</span>
+                                <span>${Math.floor(getPolicyHolderCount() / 100) * 10}</span>
+                              </div>
+                            </>
+                          ) : (
                             <div className="flex justify-between">
-                              <span>Size Adjustment (Medium)</span>
-                              <span>+50%</span>
+                              <span>Vehicle Count ({getVehicleCount()} vehicles @ $4 each)</span>
+                              <span>${getVehicleCount() * 4}</span>
                             </div>
                           )}
-                          {(vehicleCount === "500+" || requestCount === "500+") && (
-                            <div className="flex justify-between">
-                              <span>Size Adjustment (Large)</span>
-                              <span>+100%</span>
-                            </div>
-                          )}
+
+                          {businessType === "insurance" &&
+                            selectedServices.map((serviceId) => {
+                              const service = serviceOptions.find((s) => s.id === serviceId)
+                              if (!service) return null
+                              return (
+                                <div key={service.id} className="flex justify-between">
+                                  <span>{service.title}</span>
+                                  <span>${service.basePrice}</span>
+                                </div>
+                              )
+                            })}
+
                           <div className="border-t pt-2 font-semibold flex justify-between">
                             <span>Total</span>
                             <span>${calculatePrice()}</span>
@@ -474,7 +836,7 @@ export default function PricingPage() {
           </CardContent>
 
           <CardFooter className="flex justify-between">
-            {phase > 1 && !showResult ? (
+            {phase > 1 && phase !== 6 && !showResult ? (
               <Button variant="outline" onClick={prevPhase}>
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>
@@ -482,9 +844,9 @@ export default function PricingPage() {
               <div></div>
             )}
 
-            {!showResult && (
+            {!showResult && phase !== 6 && (
               <Button onClick={nextPhase} disabled={!isPhaseComplete()} className="bg-primary">
-                {phase === 3 ? "See Pricing" : "Continue"} <ArrowRight className="ml-2 h-4 w-4" />
+                {phase === 5 ? "See Pricing" : "Continue"} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             )}
 
@@ -497,6 +859,16 @@ export default function PricingPage() {
                   setVehicleCount("")
                   setRequestCount("")
                   setSelectedServices([])
+                  setContactInfo({
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    phone: "",
+                  })
+                  setInsuranceQuestions({
+                    policyHolderCount: "",
+                    costPerPolicy: "",
+                  })
                   setShowResult(false)
                 }}
               >
@@ -513,8 +885,9 @@ export default function PricingPage() {
             <div className="bg-white p-6 rounded-lg shadow-sm border">
               <h3 className="font-semibold text-lg mb-2">How is pricing determined?</h3>
               <p className="text-gray-600">
-                Our pricing is based on your business type, size, and the specific services you need. We start with a
-                base price and add service costs, with adjustments for business size.
+                Our pricing is based on your business type, size, and the specific services you need. For insurance
+                companies, pricing is based on the number of policy holders. For fleet managers and owner-operators, we
+                charge $4 per vehicle per month.
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm border">
@@ -527,8 +900,9 @@ export default function PricingPage() {
             <div className="bg-white p-6 rounded-lg shadow-sm border">
               <h3 className="font-semibold text-lg mb-2">Do you offer custom enterprise solutions?</h3>
               <p className="text-gray-600">
-                Yes, for larger organizations or those with complex needs, we offer custom enterprise solutions. Please
-                schedule a consultation for more information.
+                Yes, for larger organizations or those with complex needs, we offer custom enterprise solutions.
+                Insurance companies with over 1,000 policy holders or businesses with more than 5 vehicles automatically
+                qualify for our enterprise plan.
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm border">

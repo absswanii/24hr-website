@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/custom-button"
 import Link from "next/link"
+import Image from "next/image"
 
 interface SlideContent {
   title: string
@@ -13,13 +14,17 @@ interface SlideContent {
   problems: string[]
   ctaText: string
   ctaLink: string
+  image?: string
+  videoUrl?: string
+  showFor?: boolean
 }
 
 const slides: SlideContent[] = [
   {
-    title: "FLEET MANAGERS",
-    highlight: "REDUCE DOWNTIME",
-    description: "We handle your roadside calls 24/7 and connect your drivers with qualified service providers",
+    title: "FLEETS",
+    highlight: "REDUCE OPERATIONAL COSTS",
+    description:
+      "We handle all your calls 24/7, connect your drivers with qualified service providers for emergency roadside & preventative maintenance scheduling.",
     problems: [
       "Multiple Breakdown Calls Daily",
       "Driver Frustration & Delays",
@@ -28,64 +33,75 @@ const slides: SlideContent[] = [
     ],
     ctaText: "FLEET SOLUTIONS",
     ctaLink: "/who-its-for/fleets",
+    image: "/fleet-vehicles-lineup.png",
+    showFor: true,
   },
   {
     title: "INSURANCE COMPANIES",
-    highlight: "STREAMLINE CLAIMS",
-    description: "We answer your policyholders' calls and dispatch pre-approved service providers",
+    highlight: "OUTSOURCE THE HASSLE, KEEP THE SAVINGS",
+    description: "We keep your customers happy and save you money by lowering your roadside costs.",
     problems: [
-      "High Call Volume Management",
-      "Finding Qualified Providers",
-      "Controlling Repair Costs",
-      "Customer Satisfaction Issues",
+      "Growing call center costs",
+      "Unreliable service providers",
+      "Decreasing Customer Satisfaction",
+      "Trapped By 3rd Party Service Models",
     ],
     ctaText: "INSURANCE SOLUTIONS",
     ctaLink: "/who-its-for/insurance-companies",
+    videoUrl: "https://player.vimeo.com/video/750374131?badge=0&autopause=0&player_id=0&app_id=58479",
+    showFor: true,
   },
   {
     title: "OWNER-OPERATORS",
     highlight: "BACK ON THE ROAD",
-    description: "One call connects you with the right mechanic, anywhere in the country, anytime",
+    description: "One call connects you with the right service provider, anywhere in the country, anytime",
     problems: [
-      "Finding Reliable Mechanics",
-      "Unexpected Breakdowns",
+      "Costly Dispatch",
+      "Unreliable Service Providers",
       "Lost Revenue While Waiting",
       "Overpriced Emergency Repairs",
     ],
     ctaText: "DRIVER SOLUTIONS",
     ctaLink: "/who-its-for/owner-operators",
+    videoUrl: "https://player.vimeo.com/video/750374131?badge=0&autopause=0&player_id=0&app_id=58479",
+    showFor: true,
   },
   {
     title: "SERVICE PROVIDERS",
     highlight: "GROW YOUR BUSINESS",
     description: "We send you pre-qualified customers and handle all the dispatch communications",
     problems: [
-      "Finding New Customers",
+      "Sales & Marketing Challenges",
       "Inconsistent Job Flow",
       "Administrative Overhead",
       "Payment Collection Issues",
     ],
     ctaText: "PROVIDER SOLUTIONS",
     ctaLink: "/who-its-for/service-providers",
+    image: "/service-provider-hero.png",
+    showFor: true,
   },
   {
-    title: "ROADSIDE ASSISTANCE",
-    highlight: "24/7 DISPATCH",
+    title: "24/7",
+    highlight: "Dispatch Platform",
     description: "We're always available to take your call and find the help you need",
     problems: [
       "No One Answering Your Calls",
       "Long Wait Times for Help",
       "Unreliable Service Providers",
-      "Difficulty Finding Mechanics",
+      "Difficulty Finding Service Providers",
     ],
     ctaText: "GET STARTED",
     ctaLink: "/get-started",
+    image: "/ai-dispatch-team.jpeg",
+    showFor: false,
   },
 ]
 
 export function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [autoplay, setAutoplay] = useState(true)
+  const [isHovering, setIsHovering] = useState(false)
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
@@ -97,27 +113,35 @@ export function HeroCarousel() {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index)
-    setAutoplay(false)
   }
 
   useEffect(() => {
-    if (!autoplay) return
+    if (!autoplay || isHovering) return
 
     const interval = setInterval(() => {
       nextSlide()
     }, 6000)
 
     return () => clearInterval(interval)
-  }, [autoplay, currentSlide])
+  }, [autoplay, currentSlide, isHovering])
+
+  // Pause autoplay when video is on screen
+  useEffect(() => {
+    if (slides[currentSlide].videoUrl) {
+      setAutoplay(false)
+    } else {
+      setAutoplay(true)
+    }
+  }, [currentSlide])
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-20">{/* Removed TireTrackPattern */}</div>
-      {/* Removed SkidMarks */}
-
+    <div
+      className="relative w-full overflow-hidden"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       {/* Carousel */}
-      <div className="relative h-full">
+      <div className="relative pt-[75px] pb-[115px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -125,20 +149,22 @@ export function HeroCarousel() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.5 }}
-            className="h-full"
           >
-            <div className="container mx-auto px-4 md:px-8 py-16 md:py-24 h-full">
-              <div className="grid md:grid-cols-2 gap-6 items-center h-full">
+            <div className="container mx-auto px-4 md:px-8">
+              <div className="grid md:grid-cols-2 gap-6 items-center">
                 <div className="text-white">
-                  <div className="mb-2 text-secondary font-medium tracking-wider">FOR</div>
-                  <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4 hero-title">
+                  {slides[currentSlide].showFor !== false && (
+                    <div className="text-secondary font-medium tracking-wider">FOR</div>
+                  )}
+                  <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-2 hero-title">
                     <span className="block">{slides[currentSlide].title}</span>
-                    <span className="text-secondary italic block mt-2">{slides[currentSlide].highlight}</span>
+                    <span className="text-secondary italic block mt-1">{slides[currentSlide].highlight}</span>
                   </h1>
 
-                  <p className="text-lg mb-6">{slides[currentSlide].description}</p>
+                  <p className="text-lg mb-4">{slides[currentSlide].description}</p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mb-8">
+                  <div className="mb-1 font-medium">We help fix:</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 mb-6">
                     {slides[currentSlide].problems.map((item, index) => (
                       <motion.div
                         key={index}
@@ -189,7 +215,31 @@ export function HeroCarousel() {
                 </div>
 
                 <div className="hidden md:flex items-center justify-center">
-                  {/* This space can be used for slide-specific images if needed */}
+                  {slides[currentSlide].videoUrl ? (
+                    <div className="relative w-full h-80 overflow-hidden rounded-lg shadow-lg">
+                      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+                        <iframe
+                          src={slides[currentSlide].videoUrl}
+                          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                          frameBorder="0"
+                          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                          title={`${slides[currentSlide].title} video`}
+                        ></iframe>
+                      </div>
+                    </div>
+                  ) : slides[currentSlide].image ? (
+                    <div className="relative w-full h-80 overflow-hidden rounded-lg shadow-lg">
+                      <Image
+                        src={slides[currentSlide].image || "/placeholder.svg"}
+                        alt={`${slides[currentSlide].title} illustration`}
+                        fill
+                        className="object-contain md:object-cover"
+                        priority
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent" />
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -213,7 +263,7 @@ export function HeroCarousel() {
         </button>
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 z-10">
+        <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
           {slides.map((_, index) => (
             <button
               key={index}

@@ -274,12 +274,12 @@ export default function Services() {
                     <div className="bg-primary/10 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4">
                       <Wrench className="text-primary w-7 h-7" />
                     </div>
-                    <CardTitle className="text-xl font-bold">Mobile Mechanic</CardTitle>
+                    <CardTitle className="text-xl font-bold">Mobile Service Provider</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-4">
-                      Our mobile mechanics bring the repair shop to you, performing diagnostics and repairs at your
-                      location.
+                      Our mobile service providers bring the repair shop to you, performing diagnostics and repairs at
+                      your location.
                     </p>
                     <ul className="space-y-2">
                       <li className="flex items-start">
@@ -327,10 +327,11 @@ export default function Services() {
                 <div className="bg-primary/10 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
                   <Wrench className="text-primary w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Mobile Mechanic Services</h3>
+                <h3 className="text-2xl font-bold mb-4">Mobile Service Provider Services</h3>
                 <p className="text-gray-600 mb-4">
-                  Our mobile mechanics bring the repair shop to your location, whether you're at home, work, or stranded
-                  on the road. We service all vehicle types including cars, SUVs, trucks, and commercial vehicles.
+                  Our mobile service providers bring the repair shop to your location, whether you're at home, work, or
+                  stranded on the road. We service all vehicle types including cars, SUVs, trucks, and commercial
+                  vehicles.
                 </p>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-start">
@@ -607,7 +608,7 @@ export default function Services() {
                   REQUEST SERVICE
                 </Button>
               </Link>
-              <Link href="tel:+18004TRUCKS">
+              <Link href="tel:+13022731234">
                 <Button className="bg-white hover:bg-gray-100 text-primary px-8 py-3 text-lg font-bold w-full sm:w-auto">
                   CALL NOW
                 </Button>

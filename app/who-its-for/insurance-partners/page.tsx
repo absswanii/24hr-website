@@ -12,18 +12,19 @@ export const metadata = {
 export default function InsurancePartnersPage() {
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section with background image */}
       <HeroSection
-        title="24Hr Roadside Assistance for Insurance Partners"
+        title="24Hr Concierge for Insurance Partners"
         description="Enhance your policyholder experience with our nationwide roadside assistance network and seamless integration options."
         showWave={true}
+        backgroundImage="/insurance-claim-hero.png"
       >
         <div className="inline-block bg-white/10 p-3 rounded-full mb-4">
           <Shield className="h-8 w-8 text-white" />
         </div>
       </HeroSection>
 
-      {/* Main Content */}
+      {/* Rest of the content remains the same */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">

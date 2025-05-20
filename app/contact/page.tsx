@@ -2,6 +2,7 @@ import { MapPin, Phone, Mail, MessageSquare, Facebook, Instagram, Linkedin } fro
 import { Button } from "@/components/ui/button"
 import { HeroSection } from "@/components/hero-section"
 import { FadeIn } from "@/components/animations/fade-in"
+import ContactForm from "./contact-form"
 
 export const metadata = {
   title: "Contact Us | 24Hr Truck Services & AI Concierge",
@@ -15,9 +16,10 @@ export default function Contact() {
       <HeroSection
         title="Contact Us"
         subtitle="Get in touch with our team for truck repair services, roadside assistance, or any questions you might have."
+        showWave={true}
       />
 
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <FadeIn>
             <div className="text-center mb-12">
@@ -35,8 +37,13 @@ export default function Contact() {
               </div>
               <h3 className="text-xl font-bold mb-2">PHONE</h3>
               <p className="text-gray-600 dark:text-gray-400">
-                <a href="tel:+18004TRUCKS" className="hover:text-primary transition-colors">
-                  1-800-4-TRUCKS
+                <a
+                  href="tel:+13022731234"
+                  className="hover:text-primary transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  +1 302 273-1234
                 </a>
               </p>
             </FadeIn>
@@ -49,7 +56,12 @@ export default function Contact() {
               </div>
               <h3 className="text-xl font-bold mb-2">EMAIL</h3>
               <p className="text-gray-600 dark:text-gray-400">
-                <a href="mailto:concierge@24hrtruckfix.com" className="hover:text-primary transition-colors">
+                <a
+                  href="mailto:concierge@24hrtruckfix.com"
+                  className="hover:text-primary transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   concierge@24hrtruckfix.com
                 </a>
               </p>
@@ -81,6 +93,8 @@ export default function Contact() {
                   href="https://facebook.com"
                   className="text-gray-600 hover:text-primary dark:text-gray-400 transition-colors"
                   aria-label="Facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Facebook size={20} />
                 </a>
@@ -88,6 +102,8 @@ export default function Contact() {
                   href="https://instagram.com"
                   className="text-gray-600 hover:text-primary dark:text-gray-400 transition-colors"
                   aria-label="Instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Instagram size={20} />
                 </a>
@@ -95,6 +111,8 @@ export default function Contact() {
                   href="https://linkedin.com"
                   className="text-gray-600 hover:text-primary dark:text-gray-400 transition-colors"
                   aria-label="LinkedIn"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Linkedin size={20} />
                 </a>
@@ -119,147 +137,13 @@ export default function Contact() {
             </FadeIn>
 
             <FadeIn direction="right">
-              <div className="bg-white dark:bg-gray-800 p-8 border border-gray-200 dark:border-gray-700">
+              <div className="bg-card p-8 border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center mb-6">
                   <MessageSquare className="h-6 w-6 text-primary mr-3" />
                   <h3 className="text-2xl font-bold">SEND A MESSAGE</h3>
                 </div>
 
-                <form className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium mb-1">
-                        FIRST NAME
-                      </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md"
-                        placeholder="First name"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium mb-1">
-                        LAST NAME
-                      </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md"
-                        placeholder="Last name"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium mb-1">
-                        EMAIL
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md"
-                        placeholder="Email"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium mb-1">
-                        CONTACT NUMBER
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md"
-                        placeholder="Contact number"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="city" className="block text-sm font-medium mb-1">
-                        CITY
-                      </label>
-                      <input
-                        type="text"
-                        id="city"
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md"
-                        placeholder="City"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="region" className="block text-sm font-medium mb-1">
-                        REGION
-                      </label>
-                      <input
-                        type="text"
-                        id="region"
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md"
-                        placeholder="State/Region"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-1">
-                      MESSAGE
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={4}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md"
-                      placeholder="Message"
-                    ></textarea>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="block text-sm font-medium mb-2">MAKE AN APPOINTMENT / SET A MEETING</p>
-                      <div className="flex space-x-4">
-                        <label className="flex items-center">
-                          <input type="radio" name="contactType" className="mr-2" />
-                          <span>Message</span>
-                        </label>
-                        <label className="flex items-center">
-                          <input type="radio" name="contactType" className="mr-2" />
-                          <span>Call</span>
-                        </label>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="block text-sm font-medium mb-2">PREFERRED CONTACT</p>
-                      <div className="flex space-x-4">
-                        <label className="flex items-center">
-                          <input type="radio" name="preferredContact" className="mr-2" />
-                          <span>Email</span>
-                        </label>
-                        <label className="flex items-center">
-                          <input type="radio" name="preferredContact" className="mr-2" />
-                          <span>Phone</span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="flex items-start">
-                      <input type="checkbox" className="mt-1 mr-2" />
-                      <span className="text-sm">
-                        By checking this box, you consent to receiving text messages from 24HrTruckServices. You can
-                        reply STOP to opt-out at any time. For more details check our{" "}
-                        <a href="/privacy-policy" className="text-primary hover:underline">
-                          Privacy Policy
-                        </a>
-                        .
-                      </span>
-                    </label>
-                  </div>
-
-                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
-                    SEND MESSAGE
-                  </Button>
-                </form>
+                <ContactForm />
               </div>
             </FadeIn>
           </div>
@@ -275,7 +159,9 @@ export default function Contact() {
             </div>
             <div className="mt-6 md:mt-0">
               <Button asChild className="bg-white text-primary hover:bg-gray-100 font-bold text-lg px-8 py-6">
-                <a href="/services">REQUEST A DEMO</a>
+                <a href="/services" target="_blank" rel="noopener noreferrer">
+                  REQUEST A DEMO
+                </a>
               </Button>
             </div>
           </div>

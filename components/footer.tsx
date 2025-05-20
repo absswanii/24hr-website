@@ -68,6 +68,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/ai" className="text-gray-400 hover:text-primary transition-colors">
+                  AI
+                </Link>
+              </li>
+              <li>
                 <Link href="/services" className="text-gray-400 hover:text-primary transition-colors">
                   Services
                 </Link>
@@ -128,11 +133,11 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="mr-3 mt-1 text-primary flex-shrink-0" size={18} />
-                <span className="text-gray-400">123 Roadside Ave, Phoenix, AZ 85001</span>
+                <span className="text-gray-400">300 Delaware Ave, Suite 210 #382, Wilmington DE 19801</span>
               </li>
               <li className="flex items-start">
                 <Phone className="mr-3 mt-1 text-primary flex-shrink-0" size={18} />
-                <span className="text-gray-400">(800) 4-TRUCKS</span>
+                <span className="text-gray-400">+1 302 273-1234</span>
               </li>
               <li className="flex items-start">
                 <Mail className="mr-3 mt-1 text-primary flex-shrink-0" size={18} />

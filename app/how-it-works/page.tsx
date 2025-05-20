@@ -20,7 +20,7 @@ export default function HowItWorks() {
           <FadeIn>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 hero-title">How 24Hr Concierge Works</h1>
             <p className="text-xl max-w-3xl mx-auto mb-8">
-              Our streamlined process is tailored to each type of customer we serve, making it easy to get the vehicle
+              Our streamlined process is tailored to your specific needs, making it easy for you to get the vehicle
               assistance you need.
             </p>
           </FadeIn>
@@ -37,8 +37,7 @@ export default function HowItWorks() {
             <FadeIn className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Select Your Customer Type</h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                We provide tailored solutions for different types of customers. Choose your category below to see how
-                our service works for you.
+                We provide tailored solutions for different types of customers
               </p>
             </FadeIn>
 
@@ -109,8 +108,8 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 1.</span> Sign Up
                         </h4>
                         <p className="text-gray-600">
-                          Insurance companies create an account and complete our streamlined onboarding process. Our
-                          team guides them through each step to ensure a smooth setup.
+                          Create an account and complete our streamlined onboarding process. Our team guides you through
+                          each step to ensure a smooth setup.
                         </p>
                       </div>
 
@@ -119,8 +118,8 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 2.</span> Upload Roadside Policy Holders
                         </h4>
                         <p className="text-gray-600">
-                          You securely upload your roadside policy holders to our system. We integrate with your
-                          existing databases to ensure a seamless transition for your business.
+                          Securely upload your roadside policy holders to our system. We integrate with your existing
+                          databases to ensure a seamless transition for your business.
                         </p>
                       </div>
 
@@ -129,7 +128,7 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 3.</span> 24Hr Concierge Goes To Work
                         </h4>
                         <p className="text-gray-600">
-                          24Hr Concierge goes to work anytime their policy holders call in. We handle the entire process
+                          24Hr Concierge goes to work anytime your policy holders call in. We handle the entire process
                           from the initial call to dispatching service providers.
                         </p>
                       </div>
@@ -296,8 +295,8 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 1.</span> Sign Up
                         </h4>
                         <p className="text-gray-600">
-                          Fleet managers and owner operators create an account with a simple registration process. Our
-                          team works with them to understand their specific fleet needs.
+                          Create an account with a simple registration process. Our team works with you to understand
+                          your specific fleet needs.
                         </p>
                       </div>
 
@@ -306,7 +305,7 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 2.</span> Upload Assets and Vehicles
                         </h4>
                         <p className="text-gray-600">
-                          They upload their fleet vehicles and assets into our secure system. We create a comprehensive
+                          Upload your fleet vehicles and assets into our secure system. We create a comprehensive
                           digital inventory that helps us provide faster, more accurate service.
                         </p>
                       </div>
@@ -316,7 +315,7 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 3.</span> 24Hr Concierge Goes To Work
                         </h4>
                         <p className="text-gray-600">
-                          24Hr Concierge goes to work anytime their drivers call in. We handle everything from the
+                          24Hr Concierge goes to work anytime your drivers call in. We handle everything from the
                           initial call to dispatching qualified service providers.
                         </p>
                       </div>
@@ -483,8 +482,8 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 1.</span> Sign Up
                         </h4>
                         <p className="text-gray-600">
-                          Service providers join our network through a simple registration process. We verify their
-                          credentials and onboard them to start receiving job opportunities.
+                          Join our network through a simple registration process. We verify your credentials and onboard
+                          you to start receiving job opportunities.
                         </p>
                       </div>
 
@@ -493,18 +492,18 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 2.</span> Tell Us Your Specialty
                         </h4>
                         <p className="text-gray-600">
-                          They specify their service specialties, equipment capabilities, and areas of expertise. This
-                          helps us match them with the right jobs that align with their skills.
+                          Specify your service specialties, equipment capabilities, and areas of expertise. This helps
+                          us match you with the right jobs that align with your skills.
                         </p>
                       </div>
 
                       <div>
                         <h4 className="text-2xl font-bold mb-4">
-                          <span className="text-primary">Step 3.</span> We Call You
+                          <span className="text-primary">Step 3.</span> We Contact You
                         </h4>
                         <p className="text-gray-600">
-                          We call them anytime there is a vehicle breakdown within a 50-mile radius of their location
-                          that matches their expertise. They can accept or decline jobs based on availability.
+                          We contact you anytime there is a vehicle breakdown in your area that matches your expertise.
+                          You can accept or decline jobs based on your availability.
                         </p>
                       </div>
 
@@ -513,11 +512,11 @@ export default function HowItWorks() {
                         <ul className="space-y-3">
                           <li className="flex items-start">
                             <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={20} />
-                            <span>Free marketing and sales</span>
+                            <span>Free marketing and sales for your business</span>
                           </li>
                           <li className="flex items-start">
                             <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={20} />
-                            <span>Getting good jobs</span>
+                            <span>Access to quality jobs</span>
                           </li>
                           <li className="flex items-start">
                             <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={20} />
@@ -643,7 +642,7 @@ export default function HowItWorks() {
                               />
                             </svg>
                           </div>
-                          <h5 className="text-lg font-bold text-center">We Call You</h5>
+                          <h5 className="text-lg font-bold text-center">We Contact You</h5>
                         </div>
                       </div>
                     </div>
@@ -670,8 +669,8 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 1.</span> Sign Up
                         </h4>
                         <p className="text-gray-600">
-                          Students create an account and complete the verification process. We verify their student
-                          status and help them get started with flexible work opportunities.
+                          Create an account and complete the verification process. We verify your student status and
+                          help you get started with flexible work opportunities.
                         </p>
                       </div>
 
@@ -680,18 +679,18 @@ export default function HowItWorks() {
                           <span className="text-primary">Step 2.</span> Pick a Service
                         </h4>
                         <p className="text-gray-600">
-                          They select the services they can provide, such as fuel delivery or tire changes, based on
-                          their skills and training. We offer opportunities ranging from basic to advanced services.
+                          Select the services you can provide, such as fuel delivery or tire changes, based on your
+                          skills and training. We offer opportunities ranging from basic to advanced services.
                         </p>
                       </div>
 
                       <div>
                         <h4 className="text-2xl font-bold mb-4">
-                          <span className="text-primary">Step 3.</span> We Call You
+                          <span className="text-primary">Step 3.</span> We Contact You
                         </h4>
                         <p className="text-gray-600">
-                          We call them when there is an available job within a 50-mile radius that matches their skills.
-                          They can accept or decline based on their schedule and availability.
+                          We contact you when there is an available job in your area that matches your skills. You can
+                          accept or decline based on your schedule and availability.
                         </p>
                       </div>
 
@@ -700,7 +699,7 @@ export default function HowItWorks() {
                         <ul className="space-y-3">
                           <li className="flex items-start">
                             <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={20} />
-                            <span>Now getting good jobs</span>
+                            <span>Access to quality jobs</span>
                           </li>
                           <li className="flex items-start">
                             <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={20} />
@@ -708,7 +707,7 @@ export default function HowItWorks() {
                           </li>
                           <li className="flex items-start">
                             <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={20} />
-                            <span>Now gets part-time work</span>
+                            <span>Flexible part-time work opportunities</span>
                           </li>
                         </ul>
                       </div>
@@ -809,7 +808,7 @@ export default function HowItWorks() {
                       </div>
 
                       {/* Step 3 Box */}
-                      <div className="w-full bg-white rounded-lg shadow-lg border-2 border-primary p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 relative">
+                      <div className="w-full bg-white rounded-lg shadow-lg border-2 border-primary p-6 mb-16 transition-all duration-300 hover:shadow-xl hover:scale-105 relative">
                         <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">
                           3
                         </div>
@@ -830,7 +829,7 @@ export default function HowItWorks() {
                               />
                             </svg>
                           </div>
-                          <h5 className="text-lg font-bold text-center">We Call You</h5>
+                          <h5 className="text-lg font-bold text-center">We Contact You</h5>
                         </div>
                       </div>
                     </div>

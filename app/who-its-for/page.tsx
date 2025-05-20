@@ -18,7 +18,7 @@ export default function WhoItsFor() {
     <>
       {/* Hero Section */}
       <HeroSection
-        title="Who It's For"
+        title="24Hr Concierge"
         description="24Hr Roadside Assistance provides fast, reliable service for all types of vehicles and drivers, anywhere in the country."
       />
 

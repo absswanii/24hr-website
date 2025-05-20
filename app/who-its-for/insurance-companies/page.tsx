@@ -17,7 +17,7 @@ export default function InsuranceCompanyPage() {
     <>
       {/* Hero Section */}
       <HeroSection
-        title="24Hr Truck Services & AI Concierge for Insurance Companies"
+        title="24Hr Concierge for Insurance Companies"
         description="Streamline claims processing, reduce costs, and provide better service to your commercial trucking clients."
         showWave={true}
       >

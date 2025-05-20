@@ -1,15 +1,13 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { GraduationCap, BookOpen, Award, Briefcase, Users } from "lucide-react"
+import { GraduationCap, PenToolIcon as Tool, Wrench, TrendingUp, Smartphone, Clock } from "lucide-react"
 import { HeroSection } from "@/components/hero-section"
-// Import the GallopEffect component
-// import { GallopEffect } from "@/components/gallop-effect"
 
 // Update the metadata
 export const metadata = {
   title: "For Students | 24Hr Truck Services & AI Concierge",
   description:
-    "Discover career opportunities, internships, and earn income by offering your skills as a student service provider in the commercial truck repair industry.",
+    "Turn your auto and truck repair skills into a thriving business venture with 24Hr Truck Mechanic. Join our network and start your entrepreneurial journey today.",
 }
 
 export default function StudentsPage() {
@@ -17,8 +15,8 @@ export default function StudentsPage() {
     <>
       {/* Hero Section */}
       <HeroSection
-        title="24Hr Truck Services & AI Concierge for Students"
-        description="Launch your career in the commercial truck repair industry with hands-on experience, mentorship, and educational resources. Plus, earn income by offering your skills as a student service provider."
+        title="24Hr Concierge for Students"
+        description="Your gateway to entrepreneurship in the truck repair industry. Turn your skills into a thriving business with our platform and support."
         showWave={true}
       >
         <div className="inline-block bg-white/10 p-3 rounded-full mb-4">
@@ -31,78 +29,85 @@ export default function StudentsPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">Building the Next Generation of Truck Repair Professionals</h2>
+              <h2 className="text-3xl font-bold mb-6">Your Gateway to Entrepreneurship</h2>
               <p className="text-lg text-gray-700 mb-6">
-                At 24HR Truck Fix, we're committed to supporting students who are interested in careers in the
-                commercial truck repair industry. We offer a range of programs and resources designed to help you gain
-                practical experience, develop your skills, and connect with industry professionals.
+                Are you a passionate student in auto and truck repair, eager to turn your skills into a thriving
+                business venture? Look no further! Join our network and unlock the potential to start your own part-time
+                or full-time business with the 24HR Truck Mechanic app, available on both iOS and Android.
               </p>
               <p className="text-lg text-gray-700 mb-6">
-                We also recognize that students have valuable skills to offer. That's why we've created opportunities
-                for students to participate as service providers, completing small-scale tasks and projects while
-                earning income and building real-world experience.
+                Our platform connects skilled student mechanics with customers needing truck and auto repair services,
+                allowing you to build your client base while still in school and create a sustainable business model for
+                your future.
               </p>
+              <div className="mt-8 flex justify-center">
+                <Link href="/contact">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90">
+                    GET STARTED
+                  </Button>
+                </Link>
+              </div>
             </div>
 
-            {/* Programs for Students */}
+            {/* Why Choose 24HR Truck Mechanic */}
             <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Programs for Students</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-2xl font-bold mb-8 text-center">Why Choose 24HR Truck Mechanic?</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <BookOpen className="h-6 w-6 text-primary" />
+                      <TrendingUp className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Internship Program</h4>
+                      <h4 className="text-xl font-bold mb-2">Be Your Own Boss</h4>
                       <p className="text-gray-700">
-                        Gain hands-on experience working alongside experienced technicians in real-world repair
-                        scenarios.
+                        Set your own hours, rates, and service areas. Take control of your career path while still in
+                        school and build a business that grows with your skills.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <Users className="h-6 w-6 text-primary" />
+                      <Smartphone className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Mentorship Program</h4>
+                      <h4 className="text-xl font-bold mb-2">Easy-to-Use App</h4>
                       <p className="text-gray-700">
-                        Connect with industry veterans who can provide guidance, advice, and insights to help you
-                        navigate your career path.
+                        Our mobile app handles scheduling, payments, and customer management, letting you focus on what
+                        you do best—fixing trucks and vehicles.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <Award className="h-6 w-6 text-primary" />
+                      <Tool className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Scholarship Opportunities</h4>
+                      <h4 className="text-xl font-bold mb-2">Ongoing Support</h4>
                       <p className="text-gray-700">
-                        Apply for our annual scholarships designed to support students pursuing education in diesel
-                        technology and truck repair.
+                        Access technical resources, business guidance, and a community of fellow mechanics to help you
+                        overcome challenges and grow your skills.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
                   <div className="flex items-start">
                     <div className="bg-primary/10 p-2 rounded-full mr-4">
-                      <Briefcase className="h-6 w-6 text-primary" />
+                      <Clock className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold mb-2">Job Placement Assistance</h4>
+                      <h4 className="text-xl font-bold mb-2">Flexible Schedule</h4>
                       <p className="text-gray-700">
-                        Access our network of service providers and fleet managers who are looking to hire qualified
-                        technicians.
+                        Balance your studies with your business. Accept jobs when you're available and build your client
+                        base at your own pace.
                       </p>
                     </div>
                   </div>
@@ -110,267 +115,45 @@ export default function StudentsPage() {
               </div>
             </div>
 
-            {/* Educational Resources */}
+            {/* How It Works */}
             <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Educational Resources</h3>
-              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
-                <p className="text-lg text-gray-700 mb-6">
-                  We offer a variety of resources to help you expand your knowledge and skills:
-                </p>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Technical Webinars</span>
-                      <p className="text-gray-600">
-                        Free online sessions covering various aspects of truck repair and maintenance.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Online Learning Portal</span>
-                      <p className="text-gray-600">
-                        Access to tutorials, videos, and technical documentation to supplement your formal education.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Industry Workshops</span>
-                      <p className="text-gray-600">
-                        Hands-on workshops covering the latest technologies and repair techniques.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Certification Preparation</span>
-                      <p className="text-gray-600">
-                        Resources to help you prepare for ASE and other industry certifications.
-                      </p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Student Service Provider Program */}
-            <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Student Service Provider Program</h3>
-              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-8">
-                <p className="text-lg text-gray-700 mb-6">
-                  As a student, you can join our platform as a service provider, offering your skills and services while
-                  gaining valuable experience and earning income:
-                </p>
-
-                <h4 className="text-xl font-bold mb-4">Available Tasks for Student Providers</h4>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Basic Maintenance Tasks</span>
-                      <p className="text-gray-600">
-                        Perform oil changes, filter replacements, and basic inspections under supervision.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Diagnostic Assistance</span>
-                      <p className="text-gray-600">
-                        Assist certified technicians with diagnostic procedures and learn while you earn.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Parts Inventory & Logistics</span>
-                      <p className="text-gray-600">
-                        Help manage parts inventory, sourcing, and delivery to repair locations.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Documentation & Record-Keeping</span>
-                      <p className="text-gray-600">
-                        Assist with maintaining repair records, warranty documentation, and service histories.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
-                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="font-bold">Customer Service Support</span>
-                      <p className="text-gray-600">
-                        Help with customer communications, appointment scheduling, and follow-ups.
-                      </p>
-                    </div>
-                  </li>
-                </ul>
-
-                <h4 className="text-xl font-bold mb-4">How It Works</h4>
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center mb-3">
+              <h3 className="text-2xl font-bold mb-8 text-center">How It Works</h3>
+              <div className="bg-gray-50 p-8 rounded-lg">
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="text-center">
+                    <div className="bg-primary text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                       1
                     </div>
-                    <h5 className="font-bold mb-2">Sign Up</h5>
-                    <p className="text-gray-600 text-sm">
-                      Create your profile, specify your skills, availability, and the types of tasks you're interested
-                      in.
+                    <h4 className="font-bold mb-2">Sign Up</h4>
+                    <p className="text-gray-600">
+                      Create your profile, list your skills, certifications, and the services you offer.
                     </p>
                   </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center mb-3">
+                  <div className="text-center">
+                    <div className="bg-primary text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                       2
                     </div>
-                    <h5 className="font-bold mb-2">Get Verified</h5>
-                    <p className="text-gray-600 text-sm">
-                      Complete a brief orientation and verification process to ensure you're ready to provide services.
+                    <h4 className="font-bold mb-2">Get Connected</h4>
+                    <p className="text-gray-600">
+                      Customers in your area will see your profile and can request your services through the app.
                     </p>
                   </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center mb-3">
+                  <div className="text-center">
+                    <div className="bg-primary text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
                       3
                     </div>
-                    <h5 className="font-bold mb-2">Start Working</h5>
-                    <p className="text-gray-600 text-sm">
-                      Accept tasks that match your schedule and skills, complete them, and get paid directly through our
-                      platform.
-                    </p>
-                  </div>
-                </div>
-
-                <h4 className="text-xl font-bold mb-4">Benefits for Student Providers</h4>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-bold mb-2">Flexible Schedule</h5>
-                    <p className="text-gray-600 text-sm">Work around your class schedule and other commitments.</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-bold mb-2">Competitive Pay</h5>
-                    <p className="text-gray-600 text-sm">
-                      Earn income while learning with rates that respect your skills and time.
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-bold mb-2">Real-World Experience</h5>
-                    <p className="text-gray-600 text-sm">
-                      Build your resume with practical experience that employers value.
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-bold mb-2">Mentorship</h5>
-                    <p className="text-gray-600 text-sm">
-                      Work alongside experienced professionals who can guide your development.
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-bold mb-2">Performance Bonuses</h5>
-                    <p className="text-gray-600 text-sm">
-                      Earn additional incentives for high-quality work and positive customer feedback.
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-bold mb-2">Career Advancement</h5>
-                    <p className="text-gray-600 text-sm">
-                      Top-performing student providers often receive full-time job offers from our network partners.
+                    <h4 className="font-bold mb-2">Grow Your Business</h4>
+                    <p className="text-gray-600">
+                      Complete jobs, earn great reviews, and watch your client base and income grow.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Career Paths */}
+            {/* Success Stories */}
             <div className="mb-16">
-              <h3 className="text-2xl font-bold mb-6">Career Paths in Truck Repair</h3>
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <p className="text-lg text-gray-700 mb-6">
-                  The commercial truck repair industry offers diverse career opportunities with strong growth potential:
-                </p>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-bold text-lg mb-2">Diesel Technician</h4>
-                    <p className="text-gray-600 text-sm">
-                      Diagnose and repair diesel engines and related systems in commercial trucks.
-                    </p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-bold text-lg mb-2">Mobile Service Technician</h4>
-                    <p className="text-gray-600 text-sm">
-                      Provide on-site repairs and maintenance for trucks at customer locations.
-                    </p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-bold text-lg mb-2">Fleet Maintenance Manager</h4>
-                    <p className="text-gray-600 text-sm">Oversee maintenance operations for commercial truck fleets.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-bold text-lg mb-2">Service Advisor</h4>
-                    <p className="text-gray-600 text-sm">
-                      Serve as the liaison between customers and technicians, managing repair orders.
-                    </p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-bold text-lg mb-2">Parts Specialist</h4>
-                    <p className="text-gray-600 text-sm">Source and manage inventory of truck parts and components.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-bold text-lg mb-2">Shop Owner/Entrepreneur</h4>
-                    <p className="text-gray-600 text-sm">
-                      Start and manage your own truck repair business or mobile service.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial */}
-            <div className="mb-16">
+              <h3 className="text-2xl font-bold mb-8 text-center">Success Stories</h3>
               <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
                 <div className="flex items-center mb-4">
                   <div className="text-yellow-400 flex">
@@ -388,34 +171,183 @@ export default function StudentsPage() {
                   </div>
                 </div>
                 <p className="text-gray-700 text-lg italic mb-6">
-                  "Starting as a student service provider at 24HR Truck Fix was the best decision I made during college.
-                  I earned money to help with tuition while gaining hands-on experience that my classes couldn't
-                  provide. The flexible schedule worked perfectly around my classes, and the mentorship from experienced
-                  technicians was invaluable. After graduation, I had both a degree and real-world experience, which
-                  helped me land a full-time position immediately."
+                  "I started using the 24HR Truck Mechanic platform during my second year of diesel tech school. What
+                  began as a way to make extra money on weekends has grown into a full-fledged business with regular
+                  clients and steady income. The app made it easy to manage everything, and now I'm hiring other
+                  students to help with the workload. This platform literally changed my career trajectory."
                 </p>
-                <div className="font-bold">Alex M.</div>
-                <div className="text-gray-600">Former Student Provider, Now Senior Diesel Technician</div>
+                <div className="font-bold">Marcus J.</div>
+                <div className="text-gray-600">Diesel Tech Student turned Business Owner</div>
+              </div>
+            </div>
+
+            {/* Services You Can Offer */}
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold mb-6">Services You Can Offer</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <div className="flex items-start">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <Wrench className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">Basic Maintenance</h4>
+                      <ul className="list-disc pl-5 text-gray-700 space-y-1">
+                        <li>Oil changes and fluid checks</li>
+                        <li>Filter replacements</li>
+                        <li>Brake inspections and repairs</li>
+                        <li>Light electrical work</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <div className="flex items-start">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <Tool className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">Diagnostic Services</h4>
+                      <ul className="list-disc pl-5 text-gray-700 space-y-1">
+                        <li>Computer diagnostics</li>
+                        <li>Check engine light investigation</li>
+                        <li>Performance testing</li>
+                        <li>System troubleshooting</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <div className="flex items-start">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <Wrench className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">Repair Services</h4>
+                      <ul className="list-disc pl-5 text-gray-700 space-y-1">
+                        <li>Engine repairs</li>
+                        <li>Transmission work</li>
+                        <li>Suspension and steering</li>
+                        <li>Cooling system repairs</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                  <div className="flex items-start">
+                    <div className="bg-primary/10 p-2 rounded-full mr-4">
+                      <Tool className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold mb-2">Specialty Services</h4>
+                      <ul className="list-disc pl-5 text-gray-700 space-y-1">
+                        <li>Performance upgrades</li>
+                        <li>Custom modifications</li>
+                        <li>Fleet maintenance</li>
+                        <li>Pre-purchase inspections</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Requirements */}
+            <div className="mb-16">
+              <h3 className="text-2xl font-bold mb-6">Requirements to Join</h3>
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <ul className="space-y-4">
+                  <li className="flex items-start">
+                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
+                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="font-bold">Current Enrollment</span>
+                      <p className="text-gray-600">
+                        You must be currently enrolled in an automotive or diesel technology program.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
+                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="font-bold">Basic Tools</span>
+                      <p className="text-gray-600">
+                        Access to basic tools and equipment needed for the services you plan to offer.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
+                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="font-bold">Smartphone</span>
+                      <p className="text-gray-600">
+                        A compatible iOS or Android device to run the 24HR Truck Mechanic app.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
+                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="font-bold">Transportation</span>
+                      <p className="text-gray-600">
+                        Reliable transportation to reach customer locations (for mobile services).
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="bg-primary/10 p-1 rounded-full mr-3 mt-1">
+                      <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="font-bold">Passion & Dedication</span>
+                      <p className="text-gray-600">
+                        A commitment to providing quality service and building your business.
+                      </p>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
 
             {/* Call to Action */}
-            <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4">Ready to Start Your Career Journey?</h3>
+            <div className="text-center bg-primary/5 p-8 rounded-lg">
+              <h3 className="text-2xl font-bold mb-4">Ready to Launch Your Business?</h3>
               <p className="text-lg text-gray-700 mb-6">
-                Join our platform as a student service provider to gain experience, earn income, and kickstart your
-                career in the truck repair industry.
+                Join the 24HR Truck Mechanic network today and start building your future while still in school.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <Link href="/contact">
-                  <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">Become a Student Provider</Button>
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto">
+                    Sign Up Now
+                  </Button>
                 </Link>
                 <Link href="/contact">
                   <Button
                     variant="outline"
+                    size="lg"
                     className="border-primary text-primary hover:bg-primary hover:text-white w-full sm:w-auto"
                   >
-                    Explore Resources
+                    Learn More
                   </Button>
                 </Link>
               </div>
