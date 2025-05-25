@@ -33,7 +33,7 @@ export default function InsuranceCompanyPage() {
             <div className="mb-12">
               <h2 className="text-3xl font-bold mb-6">How We Help Insurance Companies</h2>
               <p className="text-lg text-gray-700 mb-6">
-                At 24HR Truck Fix, we understand the unique challenges insurance companies face when handling commercial
+                At 24hr Concierge, we understand the unique challenges insurance companies face when handling commercial
                 truck claims. Our nationwide network of qualified technicians and streamlined processes help you reduce
                 costs, expedite claims, and improve customer satisfaction.
               </p>
@@ -214,9 +214,9 @@ export default function InsuranceCompanyPage() {
                 Contact us today to discuss how we can create a customized solution for your insurance company.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link href="/contact">
-                  <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">Schedule a Consultation</Button>
-                </Link>
+                <Button className="bg-primary text-white border-2 border-primary hover:bg-white hover:text-black hover:border-primary dark:hover:bg-gray-900 dark:hover:text-white w-full sm:w-auto">
+                  Schedule a Consultation
+                </Button>
                 <Link href="/pricing">
                   <Button
                     variant="outline"

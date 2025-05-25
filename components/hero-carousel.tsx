@@ -63,7 +63,7 @@ const slides: SlideContent[] = [
     ],
     ctaText: "DRIVER SOLUTIONS",
     ctaLink: "/who-its-for/owner-operators",
-    videoUrl: "https://player.vimeo.com/video/750374131?badge=0&autopause=0&player_id=0&app_id=58479",
+    videoUrl: "https://player.vimeo.com/video/750090943?h=99c355ce9c",
     showFor: true,
   },
   {
