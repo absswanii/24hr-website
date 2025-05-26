@@ -344,6 +344,9 @@ export default function Services() {
                   </li>
                   <li className="flex items-start">
                     <span className="mr-2 text-primary">•</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="mr-2 text-primary">•</span>
                     <span>Brake system repairs</span>
                   </li>
                   <li className="flex items-start">
@@ -603,11 +606,6 @@ export default function Services() {
           </FadeIn>
           <FadeIn direction="up" delay={0.2}>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/get-started">
-                <Button className="bg-secondary hover:bg-secondary/90 text-white px-8 py-3 text-lg font-bold w-full sm:w-auto">
-                  REQUEST SERVICE
-                </Button>
-              </Link>
               <Link href="tel:+13022731234">
                 <Button className="bg-white hover:bg-gray-100 text-primary px-8 py-3 text-lg font-bold w-full sm:w-auto">
                   CALL NOW

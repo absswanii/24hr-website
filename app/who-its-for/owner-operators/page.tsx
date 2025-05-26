@@ -312,8 +312,14 @@ export default function OwnersProvidersPage() {
                 your revenue.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link href="/contact">
-                  <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">Schedule a Consultation</Button>
+                <Link
+                  href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="bg-primary hover:bg-white dark:hover:bg-gray-900 hover:text-black dark:hover:text-white text-white border-2 border-primary hover:border-primary w-full sm:w-auto">
+                    Schedule a Consultation
+                  </Button>
                 </Link>
                 <Link href="/services">
                   <Button

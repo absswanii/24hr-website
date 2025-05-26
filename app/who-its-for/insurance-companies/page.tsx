@@ -214,9 +214,15 @@ export default function InsuranceCompanyPage() {
                 Contact us today to discuss how we can create a customized solution for your insurance company.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Button className="bg-primary text-white border-2 border-primary hover:bg-white hover:text-black hover:border-primary dark:hover:bg-gray-900 dark:hover:text-white w-full sm:w-auto">
-                  Schedule a Consultation
-                </Button>
+                <Link
+                  href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="bg-primary text-white border-2 border-primary hover:bg-white hover:text-black hover:border-primary dark:hover:bg-gray-900 dark:hover:text-white w-full sm:w-auto">
+                    Schedule a Consultation
+                  </Button>
+                </Link>
                 <Link href="/pricing">
                   <Button
                     variant="outline"

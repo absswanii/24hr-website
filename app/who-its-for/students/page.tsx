@@ -41,8 +41,15 @@ export default function StudentsPage() {
                 your future.
               </p>
               <div className="mt-8 flex justify-center">
-                <Link href="/contact">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90">
+                <Link
+                  href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    size="lg"
+                    className="bg-primary border-2 border-primary text-white hover:bg-white hover:text-black dark:hover:bg-gray-900 dark:hover:text-white hover:border-primary"
+                  >
                     GET STARTED
                   </Button>
                 </Link>
@@ -165,7 +172,7 @@ export default function StudentsPage() {
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
                     ))}
                   </div>
@@ -336,8 +343,15 @@ export default function StudentsPage() {
                 Join the 24HR Truck Mechanic network today and start building your future while still in school.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link href="/contact">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 w-full sm:w-auto">
+                <Link
+                  href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    size="lg"
+                    className="bg-primary border-2 border-primary text-white hover:bg-white hover:text-black dark:hover:bg-gray-900 dark:hover:text-white hover:border-primary w-full sm:w-auto"
+                  >
                     Sign Up Now
                   </Button>
                 </Link>

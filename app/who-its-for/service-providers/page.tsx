@@ -41,8 +41,14 @@ export default function ServiceProvidersPage() {
                 allowing you to focus on what you do best—fixing trucks.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <Link href="/contact">
-                  <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">Get Started</Button>
+                <Link
+                  href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="bg-primary border-2 border-primary text-white hover:bg-white hover:text-black dark:hover:bg-gray-900 dark:hover:text-white hover:border-primary w-full sm:w-auto">
+                    Get Started
+                  </Button>
                 </Link>
                 <Link href="/contact">
                   <Button
@@ -507,8 +513,14 @@ export default function ServiceProvidersPage() {
                 Join our network of skilled mechanics and start building your independent business with our support.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link href="/contact">
-                  <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">Apply to Join</Button>
+                <Link
+                  href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="bg-primary border-2 border-primary text-white hover:bg-white hover:text-black dark:hover:bg-gray-900 dark:hover:text-white hover:border-primary w-full sm:w-auto">
+                    Apply to Join
+                  </Button>
                 </Link>
                 <Link href="/contact">
                   <Button

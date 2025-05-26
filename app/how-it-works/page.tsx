@@ -854,7 +854,11 @@ export default function HowItWorks() {
           </FadeIn>
           <FadeIn direction="up" delay={0.2}>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/get-started">
+              <Link
+                href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button className="bg-secondary hover:bg-secondary/90 text-white px-8 py-3 text-lg font-bold w-full sm:w-auto">
                   GET STARTED
                 </Button>

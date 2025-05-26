@@ -280,7 +280,11 @@ export default function InsurancePartnersPage() {
                 policyholders.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link href="/contact">
+                <Link
+                  href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">Schedule a Consultation</Button>
                 </Link>
                 <Link href="/services">

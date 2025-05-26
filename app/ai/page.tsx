@@ -3,7 +3,6 @@ import Link from "next/link"
 import { Bot, Zap, BarChart3, Clock, Shield, Truck } from "lucide-react"
 import { Button } from "@/components/custom-button"
 import { WaveDivider } from "@/components/wave-divider"
-import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { StaggerContainer } from "@/components/animations/stagger-container"
 import { StaggerItem } from "@/components/animations/stagger-item"
 
@@ -32,19 +31,20 @@ export default function AIPage() {
               </span>
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-primary">
-                Truck Solutions
+                Solutions
               </span>
             </h1>
-            <p className="text-xl md:text-2xl mb-10 text-gray-300 max-w-3xl mx-auto">
-              Intelligent automation for roadside assistance, dispatch, and customer service - available 24/7.
+            <p className="text-xl md:text-2xl mb-10 text-gray-100 max-w-3xl mx-auto">
+              Intelligent automation for roadside assistance, dispatch, and customer service - available 24/7. Never
+              miss a call!
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/contact">
+              <Link href="https://scheduler.zoom.us/aaron-swan/ai_for_business">
                 <Button variant="secondary" size="lg" className="shadow-[0_0_15px_rgba(250,204,21,0.5)]">
                   Get a Demo
                 </Button>
               </Link>
-              <Link href="#features">
+              <Link href="/ai#features">
                 <Button
                   variant="outline"
                   size="lg"
@@ -72,9 +72,24 @@ export default function AIPage() {
             </div>
             <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-6 text-center shadow-[0_0_30px_rgba(168,85,247,0.15)]">
               <p className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-purple-300 mb-2">
-                90%
+                100%
               </p>
-              <p className="text-gray-400">Customer Satisfaction</p>
+              <p className="text-gray-400">Answered Calls</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Video Section */}
+        <div className="max-w-4xl mx-auto mt-16">
+          <div className="relative rounded-xl overflow-hidden shadow-[0_0_30px_rgba(14,165,233,0.3)]">
+            <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+              <iframe
+                src="https://player.vimeo.com/video/1049743790?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                title="24HR - AI powered"
+              />
             </div>
           </div>
         </div>
@@ -88,14 +103,12 @@ export default function AIPage() {
       {/* Key Benefits - Icon Grid */}
       <section id="features" className="py-20 bg-white dark:bg-gray-950">
         <div className="container mx-auto px-4">
-          <ScrollReveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-              Intelligent Solutions for{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
-                Every Challenge
-              </span>
-            </h2>
-          </ScrollReveal>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+            Intelligent Solutions for{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
+              Every Challenge
+            </span>
+          </h2>
 
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
@@ -146,15 +159,15 @@ export default function AIPage() {
             ].map((feature, index) => (
               <StaggerItem key={index} className="group">
                 <div
-                  className={`bg-gray-900 rounded-xl p-6 border border-gray-800 h-full transition-all duration-300 hover:shadow-[0_0_30px_${feature.shadow}] hover:-translate-y-1`}
+                  className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 h-full transition-all duration-300 hover:shadow-[0_0_30px_${feature.shadow}] hover:-translate-y-1 shadow-lg`}
                 >
                   <div
                     className={`bg-gradient-to-r ${feature.color} rounded-full w-16 h-16 flex items-center justify-center mb-6`}
                   >
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.description}</p>
+                  <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">{feature.title}</h3>
+                  <p className="text-black dark:text-white">{feature.description}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -165,59 +178,57 @@ export default function AIPage() {
       {/* How It Works - Redesigned to match reference */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900 relative">
         <div className="container mx-auto px-4 relative z-10">
-          <ScrollReveal>
-            <div className="text-center max-w-4xl mx-auto mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Why AI-Powered Call Center Services for{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
-                  Transportation and Auto Insurance Providers?
-                </span>
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400">
-                In today's fast-paced insurance transportation and logistics industries, providing fast, efficient, and
-                accurate customer support is essential. Our{" "}
-                <span className="font-semibold">AI-driven call center solutions and mobile apps</span> bring
-                cutting-edge automation and intelligence to manage your fleet, logistics, and trucking operations.
-              </p>
-            </div>
-          </ScrollReveal>
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Why AI-Powered Call Center Services for{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
+                Transportation and Auto Insurance Providers?
+              </span>
+            </h2>
+            <p className="text-lg text-black dark:text-white">
+              In today's fast-paced insurance transportation and logistics industries, providing fast, efficient, and
+              accurate customer support is essential. Our{" "}
+              <span className="font-semibold">AI-driven call center solutions and mobile apps</span> bring cutting-edge
+              automation and intelligence to manage your fleet, logistics, and trucking operations.
+            </p>
+          </div>
 
           {/* Feature Cards - Horizontal Layout */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center">
+            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center border border-gray-200 dark:border-gray-700">
               <div className="flex justify-center mb-6">
                 <div className="bg-primary/10 p-4 rounded-full">
                   <Clock className="h-10 w-10 text-primary" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">24/7 Availability</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">24/7 Availability</h3>
+              <p className="text-black dark:text-white">
                 AI-powered call centers operate round the clock to support your fleet, no matter where or when
                 assistance is needed.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center">
+            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center border border-gray-200 dark:border-gray-700">
               <div className="flex justify-center mb-6">
                 <div className="bg-primary/10 p-4 rounded-full">
                   <BarChart3 className="h-10 w-10 text-primary" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">Increased Efficiency</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">Increased Efficiency</h3>
+              <p className="text-black dark:text-white">
                 Automate routine tasks like order tracking, dispatching, and roadside assistance requests for faster
                 response times.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center">
+            <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg text-center border border-gray-200 dark:border-gray-700">
               <div className="flex justify-center mb-6">
                 <div className="bg-primary/10 p-4 rounded-full">
                   <Bot className="h-10 w-10 text-primary" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">Intelligent Automation</h3>
-              <p className="text-gray-600 dark:text-gray-400">
+              <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">Intelligent Automation</h3>
+              <p className="text-black dark:text-white">
                 Our AI systems learn from each interaction, continuously improving service quality and response
                 accuracy.
               </p>
@@ -234,14 +245,12 @@ export default function AIPage() {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <ScrollReveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-              Real Results for{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-yellow-400">
-                Real Businesses
-              </span>
-            </h2>
-          </ScrollReveal>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+            Real Results for{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-yellow-400">
+              Real Businesses
+            </span>
+          </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative rounded-xl overflow-hidden h-[400px]">
@@ -260,7 +269,7 @@ export default function AIPage() {
                 </span>{" "}
                 in Response Time
               </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <p className="text-black dark:text-white mb-6">
                 A national fleet management company with over 5,000 vehicles implemented our AI dispatch system and saw
                 immediate results:
               </p>
@@ -271,7 +280,9 @@ export default function AIPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span>60% reduction in average response time for roadside assistance</span>
+                  <span className="text-black dark:text-white">
+                    60% reduction in average response time for roadside assistance
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-gradient-to-r from-secondary to-yellow-400 p-1 rounded-full mr-3 mt-1 shadow-[0_0_10px_rgba(250,204,21,0.5)]">
@@ -279,7 +290,9 @@ export default function AIPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span>42% decrease in operational costs through automated dispatch</span>
+                  <span className="text-black dark:text-white">
+                    42% decrease in operational costs through automated dispatch
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <div className="bg-gradient-to-r from-purple-600 to-purple-400 p-1 rounded-full mr-3 mt-1 shadow-[0_0_10px_rgba(168,85,247,0.5)]">
@@ -287,10 +300,12 @@ export default function AIPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span>93% customer satisfaction rating, up from 76% before implementation</span>
+                  <span className="text-black dark:text-white">
+                    93% customer satisfaction rating, up from 76% before implementation
+                  </span>
                 </li>
               </ul>
-              <Link href="/contact">
+              <Link href="https://scheduler.zoom.us/aaron-swan/ai_for_business">
                 <Button variant="primary" className="shadow-[0_0_15px_rgba(14,165,233,0.3)]">
                   Request Case Study Details
                 </Button>
@@ -310,55 +325,59 @@ export default function AIPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
-              <ScrollReveal>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Seamless Integration with Your{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
-                    Existing Systems
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Seamless Integration with Your{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">
+                  Existing Systems
+                </span>
+              </h2>
+              <p className="text-black dark:text-white mb-6">
+                Our AI solutions integrate with your existing fleet management, CRM, and dispatch systems with minimal
+                disruption to your operations.
+              </p>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-start">
+                  <div className="bg-gradient-to-r from-primary to-cyan-500 p-2 rounded-full mr-3 shadow-[0_0_10px_rgba(14,165,233,0.5)]">
+                    <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-black dark:text-white">
+                    API-based integration with major fleet management platforms
                   </span>
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-6">
-                  Our AI solutions integrate with your existing fleet management, CRM, and dispatch systems with minimal
-                  disruption to your operations.
-                </p>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start">
-                    <div className="bg-gradient-to-r from-primary to-cyan-500 p-2 rounded-full mr-3 shadow-[0_0_10px_rgba(14,165,233,0.5)]">
-                      <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span>API-based integration with major fleet management platforms</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-gradient-to-r from-secondary to-yellow-400 p-2 rounded-full mr-3 shadow-[0_0_10px_rgba(250,204,21,0.5)]">
-                      <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span>Secure data exchange with insurance and telematics systems</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-gradient-to-r from-purple-600 to-purple-400 p-2 rounded-full mr-3 shadow-[0_0_10px_rgba(168,85,247,0.5)]">
-                      <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span>Custom workflows to match your specific business processes</span>
-                  </li>
-                </ul>
-                <Link href="/contact">
-                  <Button variant="primary" className="shadow-[0_0_15px_rgba(14,165,233,0.3)]">
-                    Schedule Integration Consultation
-                  </Button>
-                </Link>
-              </ScrollReveal>
+                </li>
+                <li className="flex items-start">
+                  <div className="bg-gradient-to-r from-secondary to-yellow-400 p-2 rounded-full mr-3 shadow-[0_0_10px_rgba(250,204,21,0.5)]">
+                    <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-black dark:text-white">
+                    Secure data exchange with insurance and telematics systems
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <div className="bg-gradient-to-r from-purple-600 to-purple-400 p-2 rounded-full mr-3 shadow-[0_0_10px_rgba(168,85,247,0.5)]">
+                    <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <span className="text-black dark:text-white">
+                    Custom workflows to match your specific business processes
+                  </span>
+                </li>
+              </ul>
+              <Link href="https://scheduler.zoom.us/aaron-swan/ai_for_business">
+                <Button variant="primary" className="shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+                  Schedule Integration Consultation
+                </Button>
+              </Link>
             </div>
             <div className="order-1 lg:order-2">
               <div className="relative h-[400px] rounded-xl overflow-hidden shadow-[0_0_30px_rgba(14,165,233,0.2)]">
                 <Image
-                  src="/ai-integration-diagram.png"
-                  alt="System Integration Diagram"
+                  src="/ai-system-integration-diagram-updated.png"
+                  alt="AI System Integration with Fleet Management, Public Interface, Dials, and Insurance Systems"
                   fill
                   className="object-contain"
                 />
@@ -381,12 +400,12 @@ export default function AIPage() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-cyan-400">Transform</span>{" "}
             Your Operations with AI?
           </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-300">
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-100">
             Join the growing number of transportation and logistics companies leveraging our AI solutions to improve
             efficiency and customer satisfaction.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact">
+            <Link href="https://scheduler.zoom.us/aaron-swan/ai_for_business">
               <Button variant="secondary" size="lg" className="shadow-[0_0_15px_rgba(250,204,21,0.5)]">
                 Request a Demo
               </Button>
@@ -402,11 +421,8 @@ export default function AIPage() {
             </Link>
           </div>
         </div>
-
-        <div className="relative h-20 mt-20">
-          <WaveDivider inverted={true} />
-        </div>
       </section>
+      <script src="https://player.vimeo.com/api/player.js"></script>
     </main>
   )
 }

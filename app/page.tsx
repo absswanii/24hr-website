@@ -392,7 +392,7 @@ export default function Home() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 0 012 2"
                     />
                   </svg>
                 </div>
@@ -547,9 +547,16 @@ export default function Home() {
           </FadeIn>
           <FadeIn direction="up" delay={0.2}>
             <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Link href="tel:+13022731234">
-                <Button className="bg-white hover:bg-gray-100 text-primary px-8 py-3 text-lg font-bold w-full sm:w-auto">
-                  CALL NOW
+              <Link
+                href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  href=""
+                  className="bg-white hover:bg-gray-100 text-primary px-8 py-3 text-lg font-bold w-full sm:w-auto"
+                >
+                  GET A DEMO
                 </Button>
               </Link>
               <Link href="/contact">
@@ -574,80 +581,59 @@ export default function Home() {
 
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
             <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md">
-                <div className="flex items-center mb-3">
-                  <div className="text-yellow-400 flex">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-.181h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
+              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
+                {/* Testimonial Content */}
+                <p className="text-gray-600 dark:text-gray-400 text-sm italic mb-4">
+                  "24Hr Concierge has been a game-changer for our fleet. Their rapid response and professional service
+                  have significantly reduced our downtime."
+                </p>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
+                    {/* Placeholder for Avatar */}
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-800 dark:text-gray-200">Michael S.</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-xs">Fleet Manager</p>
                   </div>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  &quot;24Hr Concierge saved us when our vehicle broke down on a critical delivery. The technician
-                  arrived quickly and had us back on the road in no time. Excellent service!"
-                </p>
-                <div className="font-bold text-sm">John D.</div>
-                <div className="text-xs text-gray-500 dark:text-gray-500">Independent Owner-Operator</div>
               </div>
             </StaggerItem>
 
             <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md">
-                <div className="flex items-center mb-3">
-                  <div className="text-yellow-400 flex">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-.181h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
+              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
+                {/* Testimonial Content */}
+                <p className="text-gray-600 dark:text-gray-400 text-sm italic mb-4">
+                  "I was stranded on the highway late at night, and 24Hr Concierge got me help within 30 minutes.
+                  Incredible service!"
+                </p>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
+                    {/* Placeholder for Avatar */}
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-800 dark:text-gray-200">Jessica L.</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-xs">Driver</p>
                   </div>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  "As a fleet manager, I need reliable partners. 24Hr Concierge has consistently provided excellent
-                  service for our entire fleet, reducing downtime and keeping our drivers safe."
-                </p>
-                <div className="font-bold text-sm">Sarah M.</div>
-                <div className="text-xs text-gray-500 dark:text-gray-500">Fleet Manager, XYZ Logistics</div>
               </div>
             </StaggerItem>
 
             <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md">
-                <div className="flex items-center mb-3">
-                  <div className="text-yellow-400 flex">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-.181h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
+              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
+                {/* Testimonial Content */}
+                <p className="text-gray-600 dark:text-gray-400 text-sm italic mb-4">
+                  "Their dispatch team is always professional and efficient. They handle everything, so I can focus on
+                  my business."
+                </p>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
+                    {/* Placeholder for Avatar */}
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-800 dark:text-gray-200">David K.</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-xs">Business Owner</p>
                   </div>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
-                  "The peace of mind knowing someone will always answer my call is invaluable. When my RV broke down in
-                  a remote area, 24Hr Concierge found me a specialized technician within an hour."
-                </p>
-                <div className="font-bold text-sm">Robert K.</div>
-                <div className="text-xs text-gray-500 dark:text-gray-500">RV Owner</div>
               </div>
             </StaggerItem>
           </StaggerContainer>

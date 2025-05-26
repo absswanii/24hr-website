@@ -141,7 +141,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start">
                 <Mail className="mr-3 mt-1 text-primary flex-shrink-0" size={18} />
-                <span className="text-gray-400">help@24hrroadside.com</span>
+                <span className="text-gray-400">service@24hrtruckfix.com</span>
               </li>
             </ul>
           </div>

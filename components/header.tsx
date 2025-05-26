@@ -105,13 +105,13 @@ export default function Header() {
           {/* Mobile menu button */}
           <div className="flex items-center gap-4 md:hidden">
             <a
-              href="tel:+13022731234"
+              href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
               className="flex items-center text-primary font-medium mr-2"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Phone size={18} className="mr-1" />
-              <span className="hidden sm:inline">+1 302 273-1234</span>
+              <span className="hidden sm:inline">Get a Demo</span>
             </a>
             <button
               className="p-2 text-gray-600 hover:text-primary transition-colors"
@@ -206,22 +206,22 @@ export default function Header() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href="tel:+13022731234"
+              href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
               className="flex items-center text-primary font-medium"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Phone size={18} className="mr-1" />
-              +1 302 273-1234
+              Get a Demo
             </a>
             <ThemeDropdown />
             <a href="https://portal.24hrtruckfix.com/auth/signin" target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" href="">
                 Login
               </Button>
             </a>
             <a href="https://portal.24hrtruckfix.com/auth/signup" target="_blank" rel="noopener noreferrer">
-              <Button variant="primary" size="sm">
+              <Button variant="primary" size="sm" href="">
                 Get Started
               </Button>
             </a>
@@ -310,7 +310,7 @@ export default function Header() {
                       rel="noopener noreferrer"
                       onClick={closeMenu}
                     >
-                      <Button variant="outline" fullWidth>
+                      <Button variant="outline" fullWidth href="">
                         Login
                       </Button>
                     </a>
@@ -320,7 +320,7 @@ export default function Header() {
                       rel="noopener noreferrer"
                       onClick={closeMenu}
                     >
-                      <Button variant="primary" fullWidth>
+                      <Button variant="primary" fullWidth href="">
                         Get Started
                       </Button>
                     </a>
