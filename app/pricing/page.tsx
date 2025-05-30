@@ -12,10 +12,10 @@ import { Building2, Truck, User, ArrowRight, ArrowLeft, CheckCircle2, Calendar, 
 import { GallopEffect } from "@/components/gallop-effect"
 import { WaveDivider } from "@/components/wave-divider"
 import { cn } from "@/lib/utils"
+import { Checkbox } from "@/components/ui/checkbox" // Import Checkbox
 
 // Define the form state types
 type BusinessType = "insurance" | "fleet" | "owner-operator" | ""
-type SizeRange = "1-100" | "101-500" | "500+" | ""
 type ServiceOption = {
   id: string
   title: string
@@ -36,6 +36,13 @@ type ContactInfo = {
 type InsuranceQuestions = {
   policyHolderCount: string
   costPerPolicy: string
+}
+
+// Define the new fleet/owner-operator questions state types
+type FleetOperatorQuestions = {
+  selectedAvailability: string[]
+  selectedHeadaches: string[]
+  biggestIssues: string
 }
 
 // Define the service options
@@ -75,23 +82,34 @@ export default function PricingPage() {
   const [phase, setPhase] = useState<number>(1)
   const [businessType, setBusinessType] = useState<BusinessType>("")
   const [vehicleCount, setVehicleCount] = useState<string>("")
-  const [requestCount, setRequestCount] = useState<string>("")
   const [selectedServices, setSelectedServices] = useState<string[]>([])
   const [showResult, setShowResult] = useState<boolean>(false)
 
-  // New state for contact info
+  // State for contact info
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
   })
+  const [emailError, setEmailError] = useState<string | null>(null)
+  const [phoneError, setPhoneError] = useState<string | null>(null)
 
-  // New state for insurance questions
+  // State for insurance questions
   const [insuranceQuestions, setInsuranceQuestions] = useState<InsuranceQuestions>({
     policyHolderCount: "",
     costPerPolicy: "",
   })
+
+  // State for new fleet/owner-operator questions
+  const [fleetOperatorQuestions, setFleetOperatorQuestions] = useState<FleetOperatorQuestions>({
+    selectedAvailability: [],
+    selectedHeadaches: [],
+    biggestIssues: "",
+  })
+
+  // Email validation regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
   // Handle contact info changes
   const handleContactInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +118,26 @@ export default function PricingPage() {
       ...prev,
       [name]: value,
     }))
+
+    if (name === "email") {
+      if (value === "" || emailRegex.test(value)) {
+        setEmailError(null)
+      } else {
+        setEmailError("Please enter a valid email address.")
+      }
+    } else if (name === "phone") {
+      // Filter non-numeric characters for phone
+      const numericValue = value.replace(/\D/g, "")
+      setContactInfo((prev) => ({
+        ...prev,
+        [name]: numericValue,
+      }))
+      if (numericValue.length < 10 && numericValue.length > 0) {
+        setPhoneError("Phone number must be at least 10 digits.")
+      } else {
+        setPhoneError(null)
+      }
+    }
   }
 
   // Handle insurance question changes with integer validation
@@ -113,6 +151,28 @@ export default function PricingPage() {
         [name]: value,
       }))
     }
+  }
+
+  // Handle new fleet/owner-operator question changes
+  const handleFleetOperatorQuestionChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFleetOperatorQuestions((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const toggleMultiSelect = (field: keyof FleetOperatorQuestions, option: string) => {
+    setFleetOperatorQuestions((prev) => {
+      const currentSelection = prev[field] as string[]
+      const newSelection = currentSelection.includes(option)
+        ? currentSelection.filter((item) => item !== option)
+        : [...currentSelection, option]
+      return {
+        ...prev,
+        [field]: newSelection,
+      }
+    })
   }
 
   // Handle service selection
@@ -188,7 +248,7 @@ export default function PricingPage() {
     if (businessType === "insurance") {
       return basePhases + 2 // Two additional questions for insurance
     } else if (businessType === "fleet" || businessType === "owner-operator") {
-      return basePhases + 2 // Two additional questions for fleet/owner-operator
+      return basePhases + 2 // Two additional questions for fleet/owner-operator (now grouped in phase 4)
     }
 
     return basePhases
@@ -206,7 +266,7 @@ export default function PricingPage() {
       if (phase === 3) {
         return "Vehicle Count"
       } else if (phase === 4) {
-        return "Monthly Requests"
+        return "Your Fleet's Specific Needs" // New title for combined questions
       }
     }
 
@@ -229,7 +289,7 @@ export default function PricingPage() {
       if (phase === 3) {
         return "How many vehicles do you have in your fleet?"
       } else if (phase === 4) {
-        return "How many vehicle-fix requests do you get per month?"
+        return "Tell us more about your operational needs and challenges." // New description
       }
     }
 
@@ -266,8 +326,10 @@ export default function PricingPage() {
         return (
           contactInfo.firstName !== "" &&
           contactInfo.lastName !== "" &&
-          contactInfo.email !== "" &&
-          contactInfo.phone !== ""
+          emailRegex.test(contactInfo.email) && // Email validation
+          contactInfo.phone.length >= 10 && // Phone validation (at least 10 digits)
+          emailError === null &&
+          phoneError === null
         )
       case 3:
         if (businessType === "insurance") {
@@ -278,7 +340,10 @@ export default function PricingPage() {
         if (businessType === "insurance") {
           return insuranceQuestions.costPerPolicy !== ""
         }
-        return requestCount !== ""
+        // New validation for fleet/owner-operator phase 4
+        return (
+          fleetOperatorQuestions.selectedAvailability.length > 0 && fleetOperatorQuestions.selectedHeadaches.length > 0
+        )
       case 5:
         return selectedServices.length > 0
       case 6: // Schedule call phase
@@ -315,6 +380,10 @@ export default function PricingPage() {
     const displayedTotalPhases = getTotalPhases() - 1
     return ((phase - 1) / (displayedTotalPhases - 1)) * 100
   }
+
+  // Common button hover styles
+  const buttonHoverClasses =
+    "hover:border hover:border-primary hover:bg-transparent hover:text-primary dark:hover:text-white"
 
   return (
     <div className="container mx-auto py-12 px-4">
@@ -484,19 +553,24 @@ export default function PricingPage() {
                       placeholder="john.doe@example.com"
                       required
                     />
+                    {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
                   </motion.div>
 
                   <motion.div variants={itemVariants} className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
+                    <Label htmlFor="phone">Phone Number (US)</Label>
                     <Input
                       id="phone"
                       name="phone"
                       type="tel"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
                       value={contactInfo.phone}
                       onChange={handleContactInfoChange}
                       placeholder="(123) 456-7890"
                       required
                     />
+                    {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
+                    <p className="text-xs text-gray-500 mt-1">Please enter a 10-digit phone number (numbers only).</p>
                   </motion.div>
                 </motion.div>
               )}
@@ -561,7 +635,7 @@ export default function PricingPage() {
                 </motion.div>
               )}
 
-              {/* Phase 4: Second Question */}
+              {/* Phase 4: Second Question (Conditional for Insurance vs. Fleet/Owner-Op) */}
               {phase === 4 && (
                 <motion.div
                   key="phase4"
@@ -596,27 +670,69 @@ export default function PricingPage() {
                       </div>
                     </motion.div>
                   ) : (
-                    <motion.div variants={itemVariants} className="space-y-4">
+                    // New questions for Fleet/Owner-Operator
+                    <motion.div variants={itemVariants} className="space-y-6">
                       <div className="space-y-2">
-                        <Label htmlFor="requestCount">How many vehicle-fix requests do you get per month?</Label>
+                        <Label>My fleet needs support (Availability)</Label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {["Weekdays", "Weekends", "Nights (Anyday)"].map((option) => (
+                            <div key={option} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`availability-${option}`}
+                                checked={fleetOperatorQuestions.selectedAvailability.includes(option)}
+                                onCheckedChange={() => toggleMultiSelect("selectedAvailability", option)}
+                              />
+                              <label
+                                htmlFor={`availability-${option}`}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {option}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                        {fleetOperatorQuestions.selectedAvailability.length === 0 && (
+                          <p className="text-red-500 text-sm">Please select at least one option.</p>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label>Take this headache away</Label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {[
+                            "Dispatch of Emergency Roadside",
+                            "Scheduling Periodic Maintenance (PMs)",
+                            "Held Hostage by 3rd party provider",
+                          ].map((option) => (
+                            <div key={option} className="flex items-center space-x-2">
+                              <Checkbox
+                                id={`headache-${option}`}
+                                checked={fleetOperatorQuestions.selectedHeadaches.includes(option)}
+                                onCheckedChange={() => toggleMultiSelect("selectedHeadaches", option)}
+                              />
+                              <label
+                                htmlFor={`headache-${option}`}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                              >
+                                {option}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                        {fleetOperatorQuestions.selectedHeadaches.length === 0 && (
+                          <p className="text-red-500 text-sm">Please select at least one option.</p>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="biggestIssues">What are your biggest issues (Optional)</Label>
                         <Input
-                          id="requestCount"
-                          type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          value={requestCount}
-                          onChange={(e) => {
-                            const value = e.target.value
-                            if (value === "" || /^[0-9]+$/.test(value)) {
-                              setRequestCount(value)
-                            }
-                          }}
-                          placeholder="Enter number of monthly requests"
-                          required
+                          id="biggestIssues"
+                          name="biggestIssues"
+                          value={fleetOperatorQuestions.biggestIssues}
+                          onChange={handleFleetOperatorQuestionChange}
+                          placeholder="Describe any other major issues you face..."
                         />
-                        <p className="text-xs text-gray-500 mt-1">
-                          Please enter whole numbers only, no decimals or commas.
-                        </p>
                       </div>
                     </motion.div>
                   )}
@@ -714,7 +830,7 @@ export default function PricingPage() {
                       Would you prefer to schedule a specific time for the call? Click the button below to book an
                       appointment that works best for your schedule.
                     </p>
-                    <Button asChild size="lg" className="bg-primary text-white">
+                    <Button asChild size="lg" className={`bg-primary text-white ${buttonHoverClasses}`}>
                       <a
                         href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
                         target="_blank"
@@ -751,13 +867,13 @@ export default function PricingPage() {
                           </>
                         ) : (
                           <>
-                            Based on your vehicle count of <strong>{vehicleCount}</strong>, you qualify for our
+                            Based on your vehicle count of <strong>{getVehicleCount()}</strong>, you qualify for our
                             Enterprise solution. Our team will create a custom plan tailored specifically to your
                             business.
                           </>
                         )}
                       </p>
-                      <Button asChild size="lg" className="bg-primary text-white">
+                      <Button asChild size="lg" className={`bg-primary text-white ${buttonHoverClasses}`}>
                         <a
                           href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
                           target="_blank"
@@ -818,7 +934,7 @@ export default function PricingPage() {
                       </div>
 
                       <div className="flex justify-center">
-                        <Button asChild size="lg" className="bg-primary text-white">
+                        <Button asChild size="lg" className={`bg-primary text-white ${buttonHoverClasses}`}>
                           <a
                             href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
                             target="_blank"
@@ -837,7 +953,7 @@ export default function PricingPage() {
 
           <CardFooter className="flex justify-between">
             {phase > 1 && phase !== 6 && !showResult ? (
-              <Button variant="outline" onClick={prevPhase}>
+              <Button variant="outline" onClick={prevPhase} className={buttonHoverClasses}>
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>
             ) : (
@@ -845,7 +961,11 @@ export default function PricingPage() {
             )}
 
             {!showResult && phase !== 6 && (
-              <Button onClick={nextPhase} disabled={!isPhaseComplete()} className="bg-primary">
+              <Button
+                onClick={nextPhase}
+                disabled={!isPhaseComplete()}
+                className={`bg-primary text-white ${buttonHoverClasses} ${!isPhaseComplete() ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
                 {phase === 5 ? "See Pricing" : "Continue"} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             )}
@@ -857,7 +977,6 @@ export default function PricingPage() {
                   setPhase(1)
                   setBusinessType("")
                   setVehicleCount("")
-                  setRequestCount("")
                   setSelectedServices([])
                   setContactInfo({
                     firstName: "",
@@ -865,12 +984,20 @@ export default function PricingPage() {
                     email: "",
                     phone: "",
                   })
+                  setEmailError(null)
+                  setPhoneError(null)
                   setInsuranceQuestions({
                     policyHolderCount: "",
                     costPerPolicy: "",
                   })
+                  setFleetOperatorQuestions({
+                    selectedAvailability: [],
+                    selectedHeadaches: [],
+                    biggestIssues: "",
+                  })
                   setShowResult(false)
                 }}
+                className={buttonHoverClasses}
               >
                 Start Over
               </Button>

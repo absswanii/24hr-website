@@ -93,7 +93,8 @@ const slides: SlideContent[] = [
     ],
     ctaText: "GET STARTED",
     ctaLink: "/get-started",
-    image: "/ai-dispatch-team.jpeg",
+    videoUrl:
+      "https://player.vimeo.com/video/1049743790?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479",
     showFor: false,
   },
 ]

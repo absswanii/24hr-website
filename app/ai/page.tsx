@@ -80,7 +80,7 @@ export default function AIPage() {
         </div>
 
         {/* Video Section */}
-        <div className="max-w-4xl mx-auto mt-16">
+        <div className="max-w-4xl mx-auto mt-16 mb-16">
           <div className="relative rounded-xl overflow-hidden shadow-[0_0_30px_rgba(14,165,233,0.3)]">
             <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
               <iframe
@@ -94,8 +94,8 @@ export default function AIPage() {
           </div>
         </div>
 
-        {/* Wave Divider - Using the proper component */}
-        <div className="relative h-20">
+        {/* Wave Divider - Using the proper component with padding and border */}
+        <div className="relative h-20 pt-8 border-t border-white/20">
           <WaveDivider />
         </div>
       </section>
