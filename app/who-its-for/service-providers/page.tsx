@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Wrench, Clock, DollarSign, Shield, Smartphone } from "lucide-react"
 import { HeroSection } from "@/components/hero-section"
+import Script from "next/script"
 
 export const metadata = {
   title: "For Mechanics & Independent Repair Shops | 24Hr Truck Services & AI Concierge",
@@ -53,7 +54,7 @@ export default function ServiceProvidersPage() {
                 <Link href="/contact">
                   <Button
                     variant="outline"
-                    className="border-primary text-primary hover:bg-primary hover:text-white w-full sm:w-auto"
+                    className="border-primary text-primary hover:bg-primary hover:text-white w-full sm:w-auto bg-transparent"
                   >
                     Contact Us
                   </Button>
@@ -525,7 +526,7 @@ export default function ServiceProvidersPage() {
                 <Link href="/contact">
                   <Button
                     variant="outline"
-                    className="border-primary text-primary hover:bg-primary hover:text-white w-full sm:w-auto"
+                    className="border-primary text-primary hover:bg-primary hover:text-white w-full sm:w-auto bg-transparent"
                   >
                     Request More Information
                   </Button>
@@ -535,6 +536,14 @@ export default function ServiceProvidersPage() {
           </div>
         </div>
       </section>
+
+      {/* AI Widget */}
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `<the24hr widget_id="68a325b343bbe2e6630e38b1" isOrg="true"></the24hr>`,
+        }}
+      />
+      <Script src="https://portal.24hrtruckfix.com/widget/the24hr-widget.min.js" strategy="afterInteractive" />
     </>
   )
 }
