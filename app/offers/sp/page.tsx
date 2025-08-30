@@ -285,7 +285,7 @@ export default function ServiceProviderLanding() {
       {/* AI Widget */}
       <div
         dangerouslySetInnerHTML={{
-          __html: `<the24hr widget_id="68a325b343bbe2e6630e38b1" isOrg="true"></the24hr>`,
+          __html: `<the24hr widget_id="68b2f5b07b0cc9d7dc709e46" isOrg="true"></the24hr>`,
         }}
       />
       <Script
