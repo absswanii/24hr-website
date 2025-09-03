@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -10,14 +11,12 @@ import { Label } from "@/components/ui/label"
 import { Building2, Truck, User, ArrowRight, ArrowLeft, CheckCircle2, Calendar, PhoneCall } from "lucide-react"
 import { GallopEffect } from "@/components/gallop-effect"
 import { WaveDivider } from "@/components/wave-divider"
-import { submitPricingForm } from "./actions";
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox" // Import Checkbox
 
 // Define the form state types
-export type BusinessType = "insurance" | "fleet" | "owner-operator" | ""
-type SizeRange = "1-100" | "101-500" | "500+" | ""
-export type ServiceOption = {
+type BusinessType = "insurance" | "fleet" | "owner-operator" | ""
+type ServiceOption = {
   id: string
   title: string
   description: string
@@ -26,7 +25,7 @@ export type ServiceOption = {
 }
 
 // Define the contact form state type
-export type ContactInfo = {
+type ContactInfo = {
   firstName: string
   lastName: string
   email: string
@@ -34,7 +33,7 @@ export type ContactInfo = {
 }
 
 // Define the insurance questions state type
-export type InsuranceQuestions = {
+type InsuranceQuestions = {
   policyHolderCount: string
   costPerPolicy: string
 }
@@ -85,7 +84,6 @@ export default function PricingPage() {
   const [vehicleCount, setVehicleCount] = useState<string>("")
   const [selectedServices, setSelectedServices] = useState<string[]>([])
   const [showResult, setShowResult] = useState<boolean>(false)
-  const [loading, setLoading] = useState(false);
 
   // State for contact info
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
@@ -319,45 +317,6 @@ export default function PricingPage() {
     }
   }
 
-  async function onSeePricingClick(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      // build the FormData exactly as your action expects
-      const fd = new FormData();
-      fd.set("businessType", businessType);
-      fd.set("policyHolderCount", insuranceQuestions.policyHolderCount);
-      fd.set("costPerPolicy", insuranceQuestions.costPerPolicy);
-      fd.set("vehicleCount", vehicleCount);
-      fd.set(
-        "selectedServices",
-        JSON.stringify(
-          serviceOptions
-            .filter((s) => selectedServices.includes(s.id))
-            .map((s) => ({ title: s.title, basePrice: s.basePrice }))
-        )
-      );
-      fd.set("estimatedPrice", String(calculatePrice()));
-      fd.set("firstName", contactInfo.firstName);
-      fd.set("lastName", contactInfo.lastName);
-      fd.set("email", contactInfo.email);
-      fd.set("phone", contactInfo.phone);
-  
-      const result = await submitPricingForm(fd);
-      if (!result.success) throw new Error(result.message);
-  
-      // only go to the next phase if email sent
-      setShowResult(false);
-      setPhase(6);
-    } catch (err: any) {
-      console.error("Pricing‐email error:", err);
-      alert(err.message || "Failed to send pricing request");
-    } finally {
-      setLoading(false);
-    }
-  }
-  
-
   // Check if current phase is complete
   const isPhaseComplete = () => {
     switch (phase) {
@@ -474,9 +433,9 @@ export default function PricingPage() {
                 ? "Select the option that best describes your business"
                 : phase === 2
                   ? "Please provide your contact details"
-                : phase === getTotalPhases() - 2
-                  ? "Select all services that are relevant to your business"
-                  : getQuestionPhaseDescription()}
+                  : phase === getTotalPhases() - 2
+                    ? "Select all services that are relevant to your business"
+                    : getQuestionPhaseDescription()}
             </CardDescription>
           </CardHeader>
 
@@ -1008,15 +967,6 @@ export default function PricingPage() {
                 className={`bg-primary text-white ${buttonHoverClasses} ${!isPhaseComplete() ? "opacity-50 cursor-not-allowed" : ""}`}
               >
                 {phase === 5 ? "See Pricing" : "Continue"} <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            )}
-
-            {!showResult && phase === 5 && (
-              <Button
-                onClick={onSeePricingClick}
-                disabled={!isPhaseComplete() || loading}
-                className="bg-primary">
-                {loading ? "Sending…" : "See Pricing"} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             )}
 

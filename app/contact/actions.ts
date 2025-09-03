@@ -69,19 +69,12 @@ export async function submitContactForm(formData: FormData | any) {
     }
 
     const validData = validationResult.data
+
     // Send confirmation email to the user
-    const userEmailSent = await sendUserConfirmationEmail({
-      ...validData,
-      city: validData?.city || '',
-      region: validData?.region || ''
-    })
+    const userEmailSent = await sendUserConfirmationEmail(validData)
 
     // Send notification email to the service team
-    const serviceEmailSent = await sendServiceNotificationEmail({
-      ...validData,
-      city: validData?.city || '',
-      region: validData?.region || ''
-    })
+    const serviceEmailSent = await sendServiceNotificationEmail(validData)
 
     // Check if both emails were sent successfully
     if (!userEmailSent || !serviceEmailSent) {

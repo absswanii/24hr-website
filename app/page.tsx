@@ -1,644 +1,736 @@
 "use client"
+import { useState, useEffect, useRef } from "react"
+import type React from "react"
+
 import Link from "next/link"
-import { Button } from "@/components/custom-button"
-import {
-  Truck,
-  Wrench,
-  Clock,
-  BarChart3,
-  Lock,
-  Headphones,
-  Globe,
-  Bell,
-  Settings,
-  Phone,
-  FileText,
-  Calendar,
-  MessageCircle,
-  CheckCircle,
-} from "lucide-react"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { GallopEffect } from "@/components/gallop-effect"
-import { FadeIn } from "@/components/animations/fade-in"
-import { StaggerContainer } from "@/components/animations/stagger-container"
-import { StaggerItem } from "@/components/animations/stagger-item"
-import { WaveDivider } from "@/components/wave-divider"
-import { HeroCarousel } from "@/components/hero-carousel"
-import { LogoCarousel } from "@/components/logo-carousel"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { Truck, Users, Building, Shield, Wrench, Cpu, Wifi, Orbit } from "lucide-react"
+import Header from "@/components/header"
+
+interface MousePosition {
+  x: number
+  y: number
+}
+
+interface NodeData {
+  id: string
+  label: string
+  color: string
+  bgColor: string
+  icon: React.ReactNode
+  link: string
+  size: { width: number; height: number }
+  floatSpeed: number
+  rotationSpeed: number
+}
+
+interface Star {
+  id: number
+  x: number
+  y: number
+  z: number
+  size: number
+  speed: number
+}
 
 export default function Home() {
+  const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 })
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null)
+  const [activeConnections, setActiveConnections] = useState<string[]>([])
+  const [stars, setStars] = useState<Star[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
+  const circleRef = useRef<HTMLDivElement>(null)
+  const nodeRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  // Reduced spring config for central core
+  const centralSpringConfig = { damping: 50, stiffness: 200 }
+
+  const mouseXSpring = useSpring(mouseX, centralSpringConfig)
+  const mouseYSpring = useSpring(mouseY, centralSpringConfig)
+
+  // Transform for 3D perspective
+  const rotateX = useTransform(mouseY, [-300, 300], [2, -2])
+  const rotateY = useTransform(mouseX, [-300, 300], [-2, 2])
+
+  const nodes: NodeData[] = [
+    {
+      id: "owner-operators",
+      label: "Owner Operators",
+      color: "text-cyan-400",
+      bgColor: "from-cyan-500/20 to-teal-600/20",
+      icon: <Truck className="w-5 h-5" />,
+      link: "/who-its-for/owner-operators",
+      size: { width: 200, height: 70 },
+      floatSpeed: 4,
+      rotationSpeed: 0.5,
+    },
+    {
+      id: "fleets",
+      label: "Fleets",
+      color: "text-pink-400",
+      bgColor: "from-pink-500/20 to-rose-600/20",
+      icon: <Users className="w-5 h-5" />,
+      link: "/who-its-for/fleets",
+      size: { width: 160, height: 65 },
+      floatSpeed: 3.5,
+      rotationSpeed: -0.3,
+    },
+    {
+      id: "associations",
+      label: "Associations",
+      color: "text-amber-400",
+      bgColor: "from-amber-500/20 to-orange-600/20",
+      icon: <Building className="w-5 h-5" />,
+      link: "/who-its-for",
+      size: { width: 190, height: 75 },
+      floatSpeed: 5,
+      rotationSpeed: 0.7,
+    },
+    {
+      id: "insurance",
+      label: "Insurance",
+      color: "text-blue-400",
+      bgColor: "from-blue-500/20 to-indigo-600/20",
+      icon: <Shield className="w-5 h-5" />,
+      link: "/who-its-for/insurance-companies",
+      size: { width: 170, height: 68 },
+      floatSpeed: 4.5,
+      rotationSpeed: -0.6,
+    },
+    {
+      id: "service-providers",
+      label: "Service Providers",
+      color: "text-purple-400",
+      bgColor: "from-purple-500/20 to-indigo-600/20",
+      icon: <Wrench className="w-5 h-5" />,
+      link: "/who-its-for/service-providers",
+      size: { width: 200, height: 80 },
+      floatSpeed: 3,
+      rotationSpeed: 0.4,
+    },
+  ]
+
+  useEffect(() => {
+    // Generate stars for space background
+    const newStars: Star[] = Array.from({ length: 150 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      z: Math.random() * 1000,
+      size: Math.random() * 2 + 0.5,
+      speed: Math.random() * 0.5 + 0.1,
+    }))
+    setStars(newStars)
+  }, [])
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect()
+        const x = e.clientX - rect.left - rect.width / 2
+        const y = e.clientY - rect.top - rect.height / 2
+        setMousePosition({ x, y })
+        mouseX.set(x)
+        mouseY.set(y)
+      }
+    }
+
+    const container = containerRef.current
+    if (container) {
+      container.addEventListener("mousemove", handleMouseMove)
+      return () => container.removeEventListener("mousemove", handleMouseMove)
+    }
+  }, [mouseX, mouseY])
+
+  useEffect(() => {
+    // Simulate active connections cycling
+    const interval = setInterval(() => {
+      const randomNodes = nodes
+        .sort(() => Math.random() - 0.5)
+        .slice(0, Math.floor(Math.random() * 2) + 1)
+        .map((node) => node.id)
+      setActiveConnections(randomNodes)
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  // Fixed connection path calculation using actual DOM element positions
+  const getConnectionPath = (nodeIndex: number) => {
+    if (!containerRef.current || !circleRef.current || !nodeRefs.current[nodeIndex]) {
+      return ""
+    }
+
+    const containerRect = containerRef.current.getBoundingClientRect()
+    const circleRect = circleRef.current.getBoundingClientRect()
+    const nodeRect = nodeRefs.current[nodeIndex]!.getBoundingClientRect()
+
+    // Get positions relative to the container
+    const circleCenterX = circleRect.left + circleRect.width / 2 - containerRect.left
+    const circleCenterY = circleRect.top + circleRect.height / 2 - containerRect.top
+    const circleRadius = 160 // Half of the 320px circle width
+
+    const nodeCenterX = nodeRect.left + nodeRect.width / 2 - containerRect.left
+    const nodeCenterY = nodeRect.top + nodeRect.height / 2 - containerRect.top
+
+    // Calculate angle from circle center to node center
+    const angle = Math.atan2(nodeCenterY - circleCenterY, nodeCenterX - circleCenterX)
+
+    // Point on the edge of the central circle (towards the node)
+    const circleEdgeX = circleCenterX + Math.cos(angle) * circleRadius
+    const circleEdgeY = circleCenterY + Math.sin(angle) * circleRadius
+
+    // Point on the left edge of the node
+    const nodeEdgeX = nodeRect.left - containerRect.left
+    const nodeEdgeY = nodeCenterY
+
+    // Create a straight line between the edges
+    return `M ${circleEdgeX} ${circleEdgeY} L ${nodeEdgeX} ${nodeEdgeY}`
+  }
+
   return (
-    <>
-      {/* Hero Section with Carousel */}
-      <section className="relative bg-primary hero-pattern overflow-hidden">
-        <HeroCarousel />
-        <GallopEffect />
-        <WaveDivider className="h-16 z-10 -mt-[50px]" />
-      </section>
+    <div className="min-h-screen bg-black overflow-hidden relative">
+      {/* Original Header */}
+      <div className="absolute top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm border-b border-cyan-500/20">
+        <Header />
+      </div>
 
-      {/* Services Overview */}
-      <section className="relative py-12 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 text-center">
-          <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">24/7 Roadside Assistance Dispatch</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto">
-              We answer your calls 24/7 and immediately connect you with qualified service providers and service
-              providers to get your vehicles back on the road fast.
-            </p>
-          </FadeIn>
+      {/* Page Title - Repositioned for mobile */}
+      <div className="absolute top-20 md:top-28 left-1/2 transform -translate-x-1/2 z-40 px-4">
+        <motion.h1
+          className="text-lg md:text-4xl font-bold text-center bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          Explore Our Platform. Choose Your Avatar
+        </motion.h1>
+        <motion.div
+          className="w-16 md:w-24 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 mx-auto mt-2 md:mt-3 rounded-full"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+        />
+      </div>
 
-          <StaggerContainer className="grid md:grid-cols-3 gap-6">
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
-                <div className="bg-primary/10 dark:bg-primary/20 p-3 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-3">
-                  <Truck className="text-primary w-7 h-7" />
-                </div>
-                <h3 className="text-lg font-bold mb-2">24/7 Call Answering</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Our dispatch center answers your calls around the clock, ensuring you never face an emergency alone.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
-                <div className="bg-primary/10 dark:bg-primary/20 p-3 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-3">
-                  <Wrench className="text-primary w-7 h-7" />
-                </div>
-                <h3 className="text-lg font-bold mb-2">Service Provider Matching</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  We quickly connect you with qualified service providers who can handle your specific vehicle repair
-                  needs.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
-                <div className="bg-primary/10 dark:bg-primary/20 p-3 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-3">
-                  <Clock className="text-primary w-7 h-7" />
-                </div>
-                <h3 className="text-lg font-bold mb-2">Rapid Response</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Our network of service providers ensures fast response times, minimizing downtime and getting you back
-                  on schedule.
-                </p>
-              </div>
-            </StaggerItem>
-          </StaggerContainer>
-
-          <FadeIn direction="up" delay={0.3} className="mt-8">
-            <Link href="/services">
-              <Button variant="primary">View All Services</Button>
-            </Link>
-          </FadeIn>
+      <div ref={containerRef} className="min-h-screen bg-black overflow-hidden relative">
+        {/* Space Stars Background */}
+        <div className="absolute inset-0">
+          {stars.map((star) => (
+            <motion.div
+              key={star.id}
+              className="absolute bg-white rounded-full"
+              style={{
+                left: `${star.x}%`,
+                top: `${star.y}%`,
+                width: `${star.size}px`,
+                height: `${star.size}px`,
+              }}
+              animate={{
+                opacity: [0.3, 1, 0.3],
+                scale: [0.8, 1.2, 0.8],
+              }}
+              transition={{
+                duration: star.speed * 8,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+                delay: Math.random() * 5,
+              }}
+            />
+          ))}
         </div>
-      </section>
 
-      {/* How It Works */}
-      <section className="relative py-12 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <FadeIn className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">How Our Dispatch Works</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Our streamlined process ensures you get the help you need quickly and efficiently, any time of day or
-              night.
-            </p>
-          </FadeIn>
-
-          <StaggerContainer className="grid md:grid-cols-3 gap-6">
-            <StaggerItem>
-              <div className="text-center">
-                <div className="bg-secondary/20 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-3">
-                  <span className="text-xl font-bold text-secondary">1</span>
-                </div>
-                <h3 className="text-lg font-bold mb-2">Call Our 24/7 Dispatch</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Reach our dispatch center anytime, day or night. We always pick up your call.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="text-center">
-                <div className="bg-secondary/20 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-3">
-                  <span className="text-xl font-bold text-secondary">2</span>
-                </div>
-                <h3 className="text-lg font-bold mb-2">We Find Your Service Provider</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  We immediately locate and dispatch the nearest qualified service provider for your specific needs.
-                </p>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="text-center">
-                <div className="bg-secondary/20 rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-3">
-                  <span className="text-xl font-bold text-secondary">3</span>
-                </div>
-                <h3 className="text-lg font-bold mb-2">Get Back on the Road</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  The service provider arrives at your location, completes the repair, and gets you moving again
-                  quickly.
-                </p>
-              </div>
-            </StaggerItem>
-          </StaggerContainer>
-
-          <FadeIn direction="up" delay={0.3} className="mt-8 text-center">
-            <Link href="/how-it-works">
-              <Button variant="primary">Learn More</Button>
-            </Link>
-          </FadeIn>
+        {/* Nebula Background Effect */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-radial from-purple-500/20 via-blue-500/10 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-radial from-cyan-500/20 via-teal-500/10 to-transparent rounded-full blur-3xl" />
         </div>
-      </section>
 
-      {/* Features Section */}
-      <section className="relative py-16 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <FadeIn className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Advanced Features for <span className="text-primary">Better Service</span>
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Our dispatch service combines human expertise with cutting-edge technology to deliver exceptional roadside
-              assistance.
-            </p>
-          </FadeIn>
+        {/* Connection Lines - Using DOM element positions */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-10">
+          <defs>
+            <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(0, 255, 255, 0.6)" />
+              <stop offset="50%" stopColor="rgba(0, 255, 255, 1)" />
+              <stop offset="100%" stopColor="rgba(0, 255, 255, 0.6)" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <FadeIn delay={0.1}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Phone className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">24/7 Call Handling</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Our dispatch team answers calls 24/7, gathering essential information with professionalism and
-                  urgency, ensuring no call goes unanswered when you need help.
-                </p>
-              </div>
-            </FadeIn>
+          {/* Render all 5 connection lines */}
+          {nodes.map((node, index) => (
+            <motion.path
+              key={`connection-${node.id}`}
+              d={getConnectionPath(index)}
+              stroke="url(#connectionGradient)"
+              strokeWidth="3"
+              strokeDasharray="10,5"
+              fill="none"
+              filter="url(#glow)"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{
+                pathLength: 1,
+                opacity: activeConnections.includes(node.id) ? 1 : 0.5,
+                strokeWidth: activeConnections.includes(node.id) ? 4 : 3,
+                strokeDashoffset: [0, -30],
+              }}
+              transition={{
+                pathLength: { duration: 2, ease: "easeInOut", delay: index * 0.2 },
+                opacity: { duration: 0.5 },
+                strokeWidth: { duration: 0.3 },
+                strokeDashoffset: { duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "linear" },
+              }}
+            />
+          ))}
 
-            {/* Feature 2 */}
-            <FadeIn delay={0.2}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <FileText className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Digital Service Records</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  We create detailed digital records of every service call. (This can include comprehensive
-                  documentation for insurance claims, maintenance records, and fleet management.)
-                </p>
-              </div>
-            </FadeIn>
+          {/* Data Flow Particles on Active Connections */}
+          {activeConnections.map((nodeId, index) => {
+            const nodeIndex = nodes.findIndex((n) => n.id === nodeId)
+            if (nodeIndex === -1) return null
 
-            {/* Feature 3 */}
-            <FadeIn delay={0.3}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Calendar className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Service Tracking</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Track the status of your service request in real-time, with updates on service provider arrival times
-                  and repair progress to keep you informed every step of the way.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 4 */}
-            <FadeIn delay={0.4}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <BarChart3 className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Fleet Analytics</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Gain insights into service patterns, common repair issues, and response times with comprehensive
-                  reporting tools designed for fleet managers and business owners.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 5 */}
-            <FadeIn delay={0.5}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Lock className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Secure Communications</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  All your data and communications are protected with enterprise-grade security, ensuring your business
-                  information and location details remain confidential.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 6 */}
-            <FadeIn delay={0.6}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Bell className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Mobile Notifications</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Receive instant alerts about service status updates, estimated arrival times, and completion
-                  notifications directly on your mobile device.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 7 */}
-            <FadeIn delay={0.7}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Globe className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Multi-language Support</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Our dispatch team can communicate in multiple languages, ensuring clear communication with drivers and
-                  service providers regardless of language barriers.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 8 */}
-            <FadeIn delay={0.8}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Headphones className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Live Dispatch Support</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Complex situations are seamlessly transferred to specialized dispatch agents who can provide advanced
-                  assistance for challenging roadside emergencies.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 9 */}
-            <FadeIn delay={0.9}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <MessageCircle className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Professional Communication</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Our dispatch team is trained specifically for roadside assistance communication, providing clear, calm
-                  guidance during stressful breakdown situations.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 10 */}
-            <FadeIn delay={1.0}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Clock className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">24/7 Availability</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Provide round-the-clock service without increasing your staff workload, ensuring drivers receive
-                  support whenever they need it, day or night.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 11 */}
-            <FadeIn delay={1.1}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <Settings className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Customizable Service Plans</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Tailor our dispatch services to match your specific business needs, with customizable response
-                  protocols and service provider preferences.
-                </p>
-              </div>
-            </FadeIn>
-
-            {/* Feature 12 */}
-            <FadeIn delay={1.2}>
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                  <CheckCircle className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Seamless Integration</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Our service easily integrates with your existing fleet management systems and workflows, requiring
-                  minimal setup and technical expertise.
-                </p>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits of Using 24Hr Concierge */}
-      <section className="relative py-16 bg-white dark:bg-gray-800">
-        <div className="container mx-auto px-4">
-          <FadeIn className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Benefits of Using <span className="text-primary">24Hr Concierge</span>
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              See how our dispatch service transforms your roadside assistance experience and keeps your vehicles on the
-              road.
-            </p>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-            <FadeIn delay={0.1}>
-              <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg border border-gray-100 dark:border-gray-600 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8 text-primary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-center mb-3">Never Miss a Call</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center">
-                  Ensure every driver receives immediate attention, regardless of time or location. Our 24/7 dispatch
-                  center is always ready to respond.
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg border border-gray-100 dark:border-gray-600 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8 text-primary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 0 012 2"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-center mb-3">Reduced Downtime</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center">
-                  Minimize vehicle downtime with rapid dispatch and efficient service coordination, keeping your
-                  business moving and reducing lost revenue.
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.3}>
-              <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg border border-gray-100 dark:border-gray-600 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8 text-primary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-center mb-3">Streamlined Service</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center">
-                  Experience simplified service coordination with our efficient dispatch system that quickly connects
-                  you with the right service provider for your needs.
-                </p>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.4}>
-              <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-lg border border-gray-100 dark:border-gray-600 h-full">
-                <div className="bg-primary/10 dark:bg-primary/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8 text-primary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-center mb-3">Enhanced Service Quality</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center">
-                  Receive consistent, professional service every time with our network of vetted service providers who
-                  meet our strict quality standards.
-                </p>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      {/* Client Logos Carousel */}
-      <LogoCarousel />
-
-      {/* FAQs */}
-      <section className="relative py-12 bg-white dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <FadeIn className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">Frequently Asked Questions</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Find answers to common questions about our roadside assistance and vehicle repair services.
-            </p>
-          </FadeIn>
-
-          <FadeIn direction="up" delay={0.2} className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1" className="border-t dark:border-gray-800">
-                <AccordionTrigger className="text-left text-base font-medium py-3">
-                  How quickly can I expect service after requesting roadside assistance?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600 dark:text-gray-400 text-sm">
-                  Our average response time is 30-60 minutes, depending on your location and current demand. In
-                  metropolitan areas, response times are typically faster. We prioritize emergency situations and
-                  provide real-time updates on the technician's estimated arrival time.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-2" className="dark:border-gray-800">
-                <AccordionTrigger className="text-left text-base font-medium py-3">
-                  What types of vehicle repairs can be performed on-site?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600 dark:text-gray-400 text-sm">
-                  Our mobile technicians can handle a wide range of repairs including electrical system issues, brake
-                  repairs, tire changes, fuel system problems, cooling system repairs, and many diagnostic services.
-                  More complex repairs requiring specialized equipment may need to be performed at a service center, but
-                  we'll help coordinate towing if necessary.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-3" className="dark:border-gray-800">
-                <AccordionTrigger className="text-left text-base font-medium py-3">
-                  Do you service all types of vehicles?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600 dark:text-gray-400 text-sm">
-                  Yes, we service all types of vehicles including commercial trucks, passenger vehicles, RVs, and
-                  specialty vehicles. Our technicians are experienced with all major makes and models.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-4" className="dark:border-gray-800">
-                <AccordionTrigger className="text-left text-base font-medium py-3">
-                  How does billing work for fleet accounts?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600 dark:text-gray-400 text-sm">
-                  Fleet accounts enjoy streamlined billing with consolidated monthly invoices, detailed service reports,
-                  and customizable approval processes. We can integrate with most fleet management systems and provide
-                  dedicated account managers for larger fleets. Contact us to set up a fleet account tailored to your
-                  needs.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-5" className="dark:border-gray-800">
-                <AccordionTrigger className="text-left text-base font-medium py-3">
-                  Are your technicians certified?
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600 dark:text-gray-400 text-sm">
-                  All technicians in our network are thoroughly vetted and must meet strict requirements including
-                  appropriate certifications, experience levels, and ongoing training. Many hold ASE certifications and
-                  manufacturer-specific training credentials. We regularly evaluate performance to ensure quality
-                  service.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="relative py-10 bg-primary hero-pattern overflow-hidden">
-        <div className="container mx-auto px-4 text-center">
-          <FadeIn>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Never Wait for Roadside Help Again</h2>
-            <p className="text-lg text-white/90 mb-6 max-w-3xl mx-auto">
-              Join the thousands of drivers and fleet managers who rely on our 24/7 dispatch service to keep their
-              vehicles moving.
-            </p>
-          </FadeIn>
-          <FadeIn direction="up" delay={0.2}>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Link
-                href="https://scheduler.zoom.us/aaron-swan/ai_for_business"
-                target="_blank"
-                rel="noopener noreferrer"
+            return (
+              <motion.circle
+                key={`particle-${nodeId}`}
+                r="5"
+                fill="cyan"
+                filter="url(#glow)"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
               >
-                <Button
-                  href=""
-                  className="bg-white hover:bg-gray-100 text-primary px-8 py-3 text-lg font-bold w-full sm:w-auto"
+                <animateMotion dur="3s" repeatCount="indefinite" path={getConnectionPath(nodeIndex)} />
+              </motion.circle>
+            )
+          })}
+        </svg>
+
+        {/* Main Content Container with Max Width */}
+        <div className="relative z-20 min-h-screen max-w-7xl mx-auto px-4 md:px-8">
+          {/* Desktop Layout */}
+          <div className="hidden md:flex items-center justify-between h-screen pt-20">
+            {/* Central AI Core - Left Side */}
+            <motion.div
+              ref={circleRef}
+              className="flex-shrink-0"
+              animate={{
+                x: mouseXSpring.get() * 0.005,
+                y: mouseYSpring.get() * 0.005,
+              }}
+            >
+              <motion.div className="w-80 h-80 relative flex items-center justify-center" whileHover={{ scale: 1.02 }}>
+                {/* Orbital Rings */}
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-cyan-400/30"
+                  animate={{ rotateZ: 360 }}
+                  transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                />
+
+                <motion.div
+                  className="absolute inset-4 rounded-full border border-blue-400/40"
+                  animate={{ rotateZ: -360 }}
+                  transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                />
+
+                <motion.div
+                  className="absolute inset-8 rounded-full border border-purple-400/30"
+                  animate={{ rotateZ: 360 }}
+                  transition={{ duration: 25, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                />
+
+                {/* Inner Core */}
+                <motion.div
+                  className="w-64 h-64 rounded-full bg-gradient-to-br from-slate-800/90 to-gray-900/90 backdrop-blur-sm border border-cyan-400/50 shadow-2xl flex items-center justify-center relative overflow-hidden"
+                  animate={{
+                    boxShadow: [
+                      "0 0 30px rgba(0, 255, 255, 0.4)",
+                      "0 0 50px rgba(0, 255, 255, 0.6)",
+                      "0 0 30px rgba(0, 255, 255, 0.4)",
+                    ],
+                  }}
+                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
                 >
-                  GET A DEMO
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="ghost" size="md" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
-                  CONTACT US
-                </Button>
-              </Link>
+                  {/* Holographic Overlay */}
+                  <div className="absolute inset-0 opacity-20">
+                    <div
+                      className="w-full h-full rounded-full"
+                      style={{
+                        backgroundImage: `radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.3) 2px, transparent 2px),
+                                       radial-gradient(circle at 75% 75%, rgba(0, 255, 255, 0.3) 2px, transparent 2px)`,
+                        backgroundSize: "20px 20px",
+                      }}
+                    />
+                  </div>
+
+                  {/* Central Content */}
+                  <div className="text-center text-white z-10 relative">
+                    <motion.div
+                      className="flex items-center justify-center mb-3"
+                      animate={{ rotateY: [0, 360] }}
+                      transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                    >
+                      <Cpu className="w-8 h-8 text-cyan-400" />
+                    </motion.div>
+
+                    <motion.h1
+                      className="text-4xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+                      animate={{
+                        textShadow: [
+                          "0 0 10px rgba(0, 255, 255, 0.5)",
+                          "0 0 20px rgba(0, 255, 255, 0.8)",
+                          "0 0 10px rgba(0, 255, 255, 0.5)",
+                        ],
+                      }}
+                      transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      24HR
+                    </motion.h1>
+
+                    <motion.div
+                      className="flex items-center justify-center gap-2 mb-2"
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      <Orbit className="w-4 h-4 text-yellow-400" />
+                      <span className="text-base text-cyan-300 font-medium">NEURAL NETWORK</span>
+                      <Orbit className="w-4 h-4 text-yellow-400" />
+                    </motion.div>
+
+                    <motion.p
+                      className="text-lg font-semibold text-blue-300"
+                      animate={{ y: [0, -2, 0] }}
+                      transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      DISPATCH CORE
+                    </motion.p>
+
+                    <motion.div
+                      className="flex items-center justify-center mt-3"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      <Wifi className="w-4 h-4 text-green-400" />
+                      <span className="text-xs text-green-400 ml-2 font-mono">ONLINE</span>
+                    </motion.div>
+                  </div>
+
+                  {/* Energy Rings */}
+                  <motion.div
+                    className="absolute inset-6 rounded-full border border-cyan-400/20"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.2, 0.6, 0.2],
+                    }}
+                    transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
+                  />
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Network Nodes - Right Side */}
+            <div className="flex-shrink-0 space-y-6">
+              {nodes.map((node, index) => (
+                <motion.div
+                  key={node.id}
+                  ref={(el) => (nodeRefs.current[index] = el)}
+                  className="relative"
+                  animate={{
+                    x: [0, 8, -4, 0],
+                    y: [0, -5, 3, 0],
+                  }}
+                  transition={{
+                    duration: node.floatSpeed,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                    delay: index * 0.2,
+                  }}
+                  whileHover={{
+                    scale: 1.05,
+                    x: -8,
+                  }}
+                  onHoverStart={() => setHoveredNode(node.id)}
+                  onHoverEnd={() => setHoveredNode(null)}
+                >
+                  <Link href={node.link}>
+                    <motion.div
+                      className={`relative bg-gradient-to-br ${node.bgColor} backdrop-blur-sm border border-white/20 shadow-xl cursor-pointer group overflow-hidden`}
+                      style={{
+                        width: node.size.width,
+                        height: node.size.height,
+                        borderRadius: "16px",
+                      }}
+                      animate={{
+                        boxShadow: activeConnections.includes(node.id)
+                          ? [
+                              "0 0 20px rgba(0, 255, 255, 0.3)",
+                              "0 0 30px rgba(0, 255, 255, 0.5)",
+                              "0 0 20px rgba(0, 255, 255, 0.3)",
+                            ]
+                          : ["0 10px 25px rgba(0, 0, 0, 0.3)"],
+                        borderColor: activeConnections.includes(node.id)
+                          ? ["rgba(255, 255, 255, 0.2)", "rgba(0, 255, 255, 0.5)", "rgba(255, 255, 255, 0.2)"]
+                          : ["rgba(255, 255, 255, 0.2)"],
+                      }}
+                      transition={{
+                        boxShadow: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+                        borderColor: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+                      }}
+                    >
+                      {/* Holographic Grid Overlay */}
+                      <div className="absolute inset-0 opacity-20 rounded-2xl">
+                        <div
+                          className="w-full h-full rounded-2xl"
+                          style={{
+                            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                                           linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
+                            backgroundSize: "8px 8px",
+                          }}
+                        />
+                      </div>
+
+                      {/* Node Content */}
+                      <div className="absolute inset-0 flex items-center justify-start text-white p-5">
+                        <motion.div
+                          className={`${node.color} mr-4 flex-shrink-0`}
+                          animate={{
+                            scale: activeConnections.includes(node.id) ? [1, 1.2, 1] : 1,
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: activeConnections.includes(node.id) ? Number.POSITIVE_INFINITY : 0,
+                          }}
+                        >
+                          {node.icon}
+                        </motion.div>
+
+                        <div className="flex-1">
+                          <div className={`text-sm font-bold ${node.color} leading-tight`}>{node.label}</div>
+                          <motion.div
+                            className="w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mt-2"
+                            animate={{
+                              opacity: activeConnections.includes(node.id) ? [0.3, 1, 0.3] : 0.3,
+                              scaleX: activeConnections.includes(node.id) ? [1, 1.2, 1] : 1,
+                            }}
+                            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Status Indicator */}
+                      <motion.div
+                        className="absolute top-3 right-3 w-2.5 h-2.5 rounded-full"
+                        animate={{
+                          backgroundColor: activeConnections.includes(node.id)
+                            ? ["#00ff00", "#00ffff", "#00ff00"]
+                            : ["#666666"],
+                          scale: activeConnections.includes(node.id) ? [1, 1.3, 1] : 1,
+                        }}
+                        transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
+                      />
+
+                      {/* Hover Effect */}
+                      <motion.div
+                        className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/10 to-blue-600/10"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: hoveredNode === node.id ? 1 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.div>
+                  </Link>
+                </motion.div>
+              ))}
             </div>
-          </FadeIn>
+          </div>
+
+          {/* Mobile Layout - Made Scrollable */}
+          <div className="md:hidden flex flex-col items-center min-h-screen pt-32 pb-8 px-4 overflow-y-auto">
+            {/* Central AI Core - Mobile - Smaller */}
+            <motion.div
+              className="flex-shrink-0 mb-8"
+              animate={{
+                x: mouseXSpring.get() * 0.002,
+                y: mouseYSpring.get() * 0.002,
+              }}
+            >
+              <motion.div className="w-48 h-48 relative flex items-center justify-center" whileHover={{ scale: 1.02 }}>
+                {/* Orbital Rings */}
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-cyan-400/30"
+                  animate={{ rotateZ: 360 }}
+                  transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                />
+
+                <motion.div
+                  className="absolute inset-2 rounded-full border border-blue-400/40"
+                  animate={{ rotateZ: -360 }}
+                  transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                />
+
+                <motion.div
+                  className="absolute inset-4 rounded-full border border-purple-400/30"
+                  animate={{ rotateZ: 360 }}
+                  transition={{ duration: 25, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                />
+
+                {/* Inner Core */}
+                <motion.div
+                  className="w-36 h-36 rounded-full bg-gradient-to-br from-slate-800/90 to-gray-900/90 backdrop-blur-sm border border-cyan-400/50 shadow-2xl flex items-center justify-center relative overflow-hidden"
+                  animate={{
+                    boxShadow: [
+                      "0 0 20px rgba(0, 255, 255, 0.4)",
+                      "0 0 30px rgba(0, 255, 255, 0.6)",
+                      "0 0 20px rgba(0, 255, 255, 0.4)",
+                    ],
+                  }}
+                  transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                >
+                  {/* Central Content */}
+                  <div className="text-center text-white z-10 relative">
+                    <motion.div
+                      className="flex items-center justify-center mb-1"
+                      animate={{ rotateY: [0, 360] }}
+                      transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                    >
+                      <Cpu className="w-5 h-5 text-cyan-400" />
+                    </motion.div>
+
+                    <motion.h1
+                      className="text-2xl font-bold mb-1 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+                      animate={{
+                        textShadow: [
+                          "0 0 10px rgba(0, 255, 255, 0.5)",
+                          "0 0 20px rgba(0, 255, 255, 0.8)",
+                          "0 0 10px rgba(0, 255, 255, 0.5)",
+                        ],
+                      }}
+                      transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      24HR
+                    </motion.h1>
+
+                    <motion.div
+                      className="flex items-center justify-center gap-1 mb-1"
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      <Orbit className="w-2 h-2 text-yellow-400" />
+                      <span className="text-xs text-cyan-300 font-medium">NEURAL NETWORK</span>
+                      <Orbit className="w-2 h-2 text-yellow-400" />
+                    </motion.div>
+
+                    <motion.p
+                      className="text-sm font-semibold text-blue-300"
+                      animate={{ y: [0, -1, 0] }}
+                      transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      DISPATCH CORE
+                    </motion.p>
+
+                    <motion.div
+                      className="flex items-center justify-center mt-1"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
+                    >
+                      <Wifi className="w-2 h-2 text-green-400" />
+                      <span className="text-xs text-green-400 ml-1 font-mono">ONLINE</span>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Network Nodes - Mobile Grid with Better Spacing */}
+            <div className="w-full max-w-sm space-y-4">
+              {nodes.map((node, index) => (
+                <motion.div
+                  key={node.id}
+                  className="relative"
+                  animate={{
+                    x: [0, 2, -1, 0],
+                    y: [0, -2, 1, 0],
+                  }}
+                  transition={{
+                    duration: node.floatSpeed,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                    delay: index * 0.2,
+                  }}
+                  whileHover={{
+                    scale: 1.02,
+                  }}
+                  onHoverStart={() => setHoveredNode(node.id)}
+                  onHoverEnd={() => setHoveredNode(null)}
+                >
+                  <Link href={node.link}>
+                    <motion.div
+                      className={`relative bg-gradient-to-br ${node.bgColor} backdrop-blur-sm border border-white/20 shadow-xl cursor-pointer group overflow-hidden w-full h-14`}
+                      style={{
+                        borderRadius: "12px",
+                      }}
+                      animate={{
+                        boxShadow: activeConnections.includes(node.id)
+                          ? [
+                              "0 0 15px rgba(0, 255, 255, 0.3)",
+                              "0 0 25px rgba(0, 255, 255, 0.5)",
+                              "0 0 15px rgba(0, 255, 255, 0.3)",
+                            ]
+                          : ["0 8px 20px rgba(0, 0, 0, 0.3)"],
+                        borderColor: activeConnections.includes(node.id)
+                          ? ["rgba(255, 255, 255, 0.2)", "rgba(0, 255, 255, 0.5)", "rgba(255, 255, 255, 0.2)"]
+                          : ["rgba(255, 255, 255, 0.2)"],
+                      }}
+                      transition={{
+                        boxShadow: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+                        borderColor: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+                      }}
+                    >
+                      {/* Node Content */}
+                      <div className="absolute inset-0 flex items-center justify-start text-white p-4">
+                        <motion.div
+                          className={`${node.color} mr-3 flex-shrink-0`}
+                          animate={{
+                            scale: activeConnections.includes(node.id) ? [1, 1.2, 1] : 1,
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: activeConnections.includes(node.id) ? Number.POSITIVE_INFINITY : 0,
+                          }}
+                        >
+                          {node.icon}
+                        </motion.div>
+
+                        <div className="flex-1">
+                          <div className={`text-sm font-bold ${node.color} leading-tight`}>{node.label}</div>
+                        </div>
+                      </div>
+
+                      {/* Status Indicator */}
+                      <motion.div
+                        className="absolute top-2 right-2 w-2 h-2 rounded-full"
+                        animate={{
+                          backgroundColor: activeConnections.includes(node.id)
+                            ? ["#00ff00", "#00ffff", "#00ff00"]
+                            : ["#666666"],
+                          scale: activeConnections.includes(node.id) ? [1, 1.3, 1] : 1,
+                        }}
+                        transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
+                      />
+                    </motion.div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="relative py-12 bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
-          <FadeIn className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">What Our Customers Say</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Don't take our word for it. Hear from drivers and fleet managers who rely on our services.
-            </p>
-          </FadeIn>
-
-          <StaggerContainer className="grid md:grid-cols-3 gap-6">
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
-                {/* Testimonial Content */}
-                <p className="text-gray-600 dark:text-gray-400 text-sm italic mb-4">
-                  "24Hr Concierge has been a game-changer for our fleet. Their rapid response and professional service
-                  have significantly reduced our downtime."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
-                    {/* Placeholder for Avatar */}
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-800 dark:text-gray-200">Michael S.</p>
-                    <p className="text-gray-500 dark:text-gray-400 text-xs">Fleet Manager</p>
-                  </div>
-                </div>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
-                {/* Testimonial Content */}
-                <p className="text-gray-600 dark:text-gray-400 text-sm italic mb-4">
-                  "I was stranded on the highway late at night, and 24Hr Concierge got me help within 30 minutes.
-                  Incredible service!"
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
-                    {/* Placeholder for Avatar */}
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-800 dark:text-gray-200">Jessica L.</p>
-                    <p className="text-gray-500 dark:text-gray-400 text-xs">Driver</p>
-                  </div>
-                </div>
-              </div>
-            </StaggerItem>
-
-            <StaggerItem>
-              <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md hover:shadow-lg transition-all">
-                {/* Testimonial Content */}
-                <p className="text-gray-600 dark:text-gray-400 text-sm italic mb-4">
-                  "Their dispatch team is always professional and efficient. They handle everything, so I can focus on
-                  my business."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 mr-3">
-                    {/* Placeholder for Avatar */}
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-800 dark:text-gray-200">David K.</p>
-                    <p className="text-gray-500 dark:text-gray-400 text-xs">Business Owner</p>
-                  </div>
-                </div>
-              </div>
-            </StaggerItem>
-          </StaggerContainer>
-        </div>
-      </section>
-    </>
+      </div>
+    </div>
   )
 }
